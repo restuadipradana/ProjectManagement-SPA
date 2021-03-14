@@ -1,0 +1,66 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h4>4.1 Week Range Set Up</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="number" [(ngModel)]="year" id="input2-group2" name="input2-group2" class="form-control" placeholder="enter a year" >
+            <span class="input-group-append">
+              <button type="button" class="btn btn-primary" (click)="generateWeek()">Generate</button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div *ngFor="let alert of alertsDismiss">
+            <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true">{{ alert.msg }}</alert>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!--
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Number of week</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2020</td>
+            <td>
+              29 <span class="badge badge-success">Active</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>-->
+      <hr>
+      <h5>Showing week range</h5>
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Is Upload</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listWeek?.length != 0">
+          <tr *ngFor="let week of listWeek">
+            <td>{{week.week}}</td>
+            <td>{{ week.startDate  | date: "yyyy/MM/dd" }}</td>
+            <td>{{ week.endDate  | date: "yyyy/MM/dd" }}</td>
+            <td>
+              <div *ngIf="week.isUpload == true; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock><span class="badge badge-warning">Yes</span></ng-template>
+                  <ng-template #elseBlock><span class="badge badge-success">No</span></ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

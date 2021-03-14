@@ -1,0 +1,78 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h4>4.2  List User</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" [(ngModel)]="newUser" id="newusr" name="newusr" class="form-control" placeholder="add user" >
+            <span class="input-group-append">
+              <button type="button" class="btn btn-primary" (click)="createUser()">Add</button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div *ngFor="let alert of alertsDismiss">
+            <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true">{{ alert.msg }}</alert>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Is Active</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listUser?.length != 0">
+          <tr *ngFor="let user of listUser">
+            <td>{{user.username}}</td>
+            <td>
+              <div *ngIf="user.isActive == true; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock><span class="badge badge-success">Active</span></ng-template>
+                  <ng-template #elseBlock><span class="badge badge-danger">Inactive</span></ng-template>
+            </td>
+            <td>
+              <button type="button" class="btn btn-pill btn-warning btn-sm" data-toggle="modal" (click)="editAction(user)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-pill btn-danger btn-sm" >
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit User Name</h4>
+        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="modalUser != null">
+        <p >{{modalUser.username}}</p>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="text-input">Usename</label>
+          <div class="col-md-9">
+            <input type="text" id="text-input" name="text-input" class="form-control" value="{{modalUser.username}}" [(ngModel)]="modalUser.username">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChangeEdit(modalUser)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
