@@ -4,7 +4,34 @@
       <h4>1.1 List Project</h4>
     </div>
     <div class="card-body">
-      body
+      <!-- Nav tabs -->
+      <tabset #projTabs >
+        
+        <tab (selectTab)="goFirstTab()"
+        [heading]="'Overview'" 
+        [active]="true"
+        [disabled]="false">
+          1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <br>
+          <button type="button" class="btn btn-primary btn-sm" (click)="goSecondTab()">Select third tab</button>
+        </tab>
+
+        <tab (selectTab)="goSecondTab()"
+        [heading]="secondTabTitle"
+        [active]="secondActive"
+        [disabled]="secondDisabled">
+          2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <br>
+          <button type="button" class="btn btn-primary btn-sm" (click)="goThirdTab()">Select third tab</button>
+        </tab>
+
+        <tab [heading]="thirdTabTitle"
+        [active]="thirdActive"
+        [disabled]="thirdDisabled">
+          3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </tab>
+
+      </tabset>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-export interface WeekList {
+export class WeekList {
   id: string;
   week: string;
   year: number;

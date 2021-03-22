@@ -5,6 +5,8 @@ export interface ProjectList {
   desc: string;
   applicant: string;
   pIC: string;
+  requestFormNo: string;
+  requestFormDesc: string;
   stageId: string;
   userExpectedDate: string;
   stageEstimateFinish:string;
@@ -18,5 +20,5 @@ export interface ProjectList {
   isNormal: boolean;
   isExclude: boolean;
   idWeek: string;
-  createdAt: Date;
+  createAt: Date;
 }

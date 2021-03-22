@@ -1,3 +1,4 @@
+import { AlertifyService } from './_core/_services/alertify.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -14,6 +15,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 import { AppComponent } from './app.component';
+
 
 // Import containers
 import { DefaultLayoutComponent } from './containers';
@@ -70,6 +72,7 @@ import { ChartsModule } from 'ng2-charts';
     RegisterComponent
   ],
   providers: [
+    AlertifyService,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
