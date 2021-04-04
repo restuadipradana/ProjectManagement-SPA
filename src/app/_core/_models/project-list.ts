@@ -7,7 +7,7 @@ export interface ProjectList {
   pIC: string;
   requestFormNo: string;
   requestFormDesc: string;
-  stageId: string;
+  stage: string;
   userExpectedDate: string;
   stageEstimateFinish:string;
   stageActualFinish: string;
@@ -16,9 +16,10 @@ export interface ProjectList {
   memo: string;
   memo2: string;
   fileName: string;
+  week: string;
+  weekId: string;
   createBy: string;
   isNormal: boolean;
   isExclude: boolean;
-  idWeek: string;
   createAt: Date;
 }

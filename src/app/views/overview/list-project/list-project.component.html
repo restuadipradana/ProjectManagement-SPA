@@ -6,12 +6,34 @@
     <div class="card-body">
       <!-- Nav tabs -->
       <tabset #projTabs >
-        
+
         <tab (selectTab)="goFirstTab()"
         [heading]="'Overview'" 
         [active]="true"
         [disabled]="false">
-          1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th style="min-width: 100px">IT PIC</th>
+              <th>Request From No</th>
+              <th>Request Form Description</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="listProjL1?.length != 0">
+            <tr *ngFor="let data of listProjL1" (click)="clickRow(data, 1)">
+              <td>{{ data.applicant }}</td>
+              <td>{{ data.pic }}</td>
+              <td style="min-width: 150px">{{ data.requestFormNo }}</td>
+              <td>{{ data.requestFormDesc }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="listProjL1?.length == 0">
+            <tr>
+              <td colspan="3" class="no-data-available">No data!</td>
+            </tr>
+          </tbody>
+      </table>
           <br>
           <button type="button" class="btn btn-primary btn-sm" (click)="goSecondTab()">Select third tab</button>
         </tab>
@@ -20,15 +42,114 @@
         [heading]="secondTabTitle"
         [active]="secondActive"
         [disabled]="secondDisabled">
-          2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div style="overflow:auto;" >
+        <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover" >
+          <thead>
+            <tr>
+              <th>Add Stage#</th>
+              <th>Applicant</th>
+              <th>IT PIC</th>
+              <th>Request From No</th>
+              <th>Request Form Description</th>
+              <th>Stage</th>
+              <th>Expected Finish Date</th>
+              <th>Estimate Stage Finish</th>
+              <th>Actual Finish Date</th>
+              <th>IT Give Test Date</th>
+              <th>Apply Date</th>
+              <th>Memo</th>
+              <th>Week</th>
+              <th>Upload Time</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="listProjL2?.length != 0">
+            <tr *ngFor="let data of listProjL2" >
+              <td>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
+              <td>{{ data.applicant }}</td>
+              <td style="min-width: 100px" (click)="clickRow(data, 2)">{{ data.pic }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.requestFormNo }}</td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.requestFormDesc }}</pre></td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.stage }}</pre></td>
+              <td (click)="clickRow(data, 2)">{{ data.userExpectedDate }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.stageEstimateFinish }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.stageActualFinish }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.testDateEstimate }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.applyDate }}</td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.memo }}</pre></td>
+              <td>{{ data.week }}</td>
+              <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="listProjL2?.length == 0">
+            <tr>
+              <td colspan="3" class="no-data-available">No data!</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
           <br>
-          <button type="button" class="btn btn-primary btn-sm" (click)="goThirdTab()">Select third tab</button>
         </tab>
 
         <tab [heading]="thirdTabTitle"
         [active]="thirdActive"
         [disabled]="thirdDisabled">
-          3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div style="overflow:auto;" >
+          <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover" >
+            <thead>
+              <tr>
+                <th>Add Memo2#</th>
+                <th>Applicant</th>
+                <th>IT PIC</th>
+                <th>Request From No</th>
+                <th>Request Form Description</th>
+                <th>Stage</th>
+                <th>Expected Finish Date</th>
+                <th>Estimate Stage Finish</th>
+                <th>Actual Finish Date</th>
+                <th>IT Give Test Date</th>
+                <th>Apply Date</th>
+                <th>Memo</th>
+                <th>Memo2</th>
+                <th>Week</th>
+                <th>Upload Time</th>
+                <th>Upload By</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="listProjL3?.length != 0">
+              <tr *ngFor="let data of listProjL3" (click)="clickRow(data, 3)">
+                <td>
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 2)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </td>
+                <td>{{ data.applicant }}</td>
+                <td style="min-width: 100px">{{ data.pic }}</td>
+                <td style="min-width: 150px">{{ data.requestFormNo }}</td>
+                <td><pre>{{ data.requestFormDesc }}</pre></td>
+                <td>{{ data.stage }}</td>
+                <td>{{ data.userExpectedDate }}</td>
+                <td>{{ data.stageEstimateFinish }}</td>
+                <td>{{ data.stageActualFinish }}</td>
+                <td>{{ data.testDateEstimate }}</td>
+                <td>{{ data.applyDate }}</td>
+                <td><pre>{{ data.memo }}</pre></td>
+                <td><pre>{{ data.memo2 }}</pre></td>
+                <td>{{ data.week }}</td>
+                <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
+                <td>{{ data.createBy }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="listProjL3?.length == 0">
+              <tr>
+                <td colspan="3" class="no-data-available">No data!</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
         </tab>
 
       </tabset>
@@ -36,3 +157,152 @@
   </div>
 </div>
 
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{modData?.requestFormNo}}</h4>
+        <button type="button" class="close" (click)="addModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Request Form No</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{modData?.requestFormNo}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Request Form Description</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{modData?.requestFormDesc}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="select1">Stage</label>
+              <div class="col-md-9">
+                <select id="select1" name="select1" class="form-control" [ngModel]="modData?.stage" (ngModelChange)="modData.stage = $event" required>
+                  <option [value]="datast.stage" *ngFor="let datast of listStage; let idx = index">{{datast.stage}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Expected Finish Date</label>
+              <div class="col-md-9">
+                <input type="text" id="expect-input" name="text-input" class="form-control" [ngModel]="modData?.userExpectedDate" (ngModelChange)="modData.userExpectedDate = $event">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Estimate Stage Finish</label>
+              <div class="col-md-9">
+                <input type="text" id="eststage-input" name="text-input" class="form-control" [ngModel]="modData?.stageEstimateFinish" (ngModelChange)="modData.stageEstimateFinish = $event">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Actual Finish Date</label>
+              <div class="col-md-9">
+                <input type="text" id="finishdate-input" name="text-input" class="form-control" [ngModel]="modData?.stageActualFinish" (ngModelChange)="modData.stageActualFinish = $event">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">IT Give Test Date</label>
+              <div class="col-md-9">
+                <input type="text" id="testdate-input" name="text-input" class="form-control" [ngModel]="modData?.testDateEstimate" (ngModelChange)="modData.testDateEstimate = $event">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Apply Date</label>
+              <div class="col-md-9">
+                <input type="text" id="apply-input" name="text-input" class="form-control" [ngModel]="modData?.applyDate" (ngModelChange)="modData.applyDate = $event">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="textarea-input">Memo</label>
+              <div class="col-md-9">
+                <textarea id="memo-input" name="textarea-input" rows="9" class="form-control" [ngModel]="modData?.memo" (ngModelChange)="modData.memo = $event"></textarea>
+              </div>
+            </div>
+            <!--
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="select1">Input By</label>
+              <div class="col-md-9">
+                <select id="selectuser" name="select1" class="form-control">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="addModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(1)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #memo2Modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{modData?.requestFormNo}}</h4>
+        <button type="button" class="close" (click)="memo2Modal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Request Form No</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{modData?.requestFormNo}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Request Form Description</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{modData?.requestFormDesc}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Stage</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{modData?.stage}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="textarea-input">Memo 2</label>
+              <div class="col-md-9">
+                <textarea id="memo-input" name="textarea-input" rows="9" class="form-control" [ngModel]="modData?.memo2" (ngModelChange)="modData.memo2 = $event"></textarea>
+              </div>
+            </div>
+            <!--
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="select1">Input By</label>
+              <div class="col-md-9">
+                <select id="selectuser" name="select1" class="form-control">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="memo2Modal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(2)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -26,7 +26,7 @@ export class WeeklyComponent implements OnInit {
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '' };
+  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
 
   constructor(private _overviewSvc: OverviewService, private alertify: AlertifyService) { }
 

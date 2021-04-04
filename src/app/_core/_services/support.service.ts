@@ -33,4 +33,8 @@ export class SupportService {
   editUser(user: UserList) {
     return this.http.post(this.baseUrl + 'settings/edit-user/', user);
   }
+
+  getStage(stage: string){
+    return this.http.get<string>(this.baseUrl + 'settings/get-stage', { params: {stage:stage} } );
+  }
 }
