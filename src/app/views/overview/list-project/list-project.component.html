@@ -35,7 +35,6 @@
           </tbody>
       </table>
           <br>
-          <button type="button" class="btn btn-primary btn-sm" (click)="goSecondTab()">Select third tab</button>
         </tab>
 
         <tab (selectTab)="goSecondTab()"
@@ -67,6 +66,9 @@
               <td>
                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
                   <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" *ngIf="data.fileName=='userinput'" (click)="openModal(data, 3)">
+                  <i class="fa fa-trash"></i>
                 </button>
               </td>
               <td>{{ data.applicant }}</td>
@@ -182,7 +184,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 col-form-label" for="select1">Stage</label>
+              <label class="col-md-3 col-form-label" for="select1">Stage<span style="color: red;">  *</span></label>
               <div class="col-md-9">
                 <select id="select1" name="select1" class="form-control" [ngModel]="modData?.stage" (ngModelChange)="modData.stage = $event" required>
                   <option [value]="datast.stage" *ngFor="let datast of listStage; let idx = index">{{datast.stage}}</option>
@@ -225,24 +227,25 @@
                 <textarea id="memo-input" name="textarea-input" rows="9" class="form-control" [ngModel]="modData?.memo" (ngModelChange)="modData.memo = $event"></textarea>
               </div>
             </div>
-            <!--
             <div class="form-group row">
-              <label class="col-md-3 col-form-label" for="select1">Input By</label>
+              <label class="col-md-3 col-form-label" for="select2">Input By<span style="color: red;">  *</span></label>
               <div class="col-md-9">
-                <select id="selectuser" name="select1" class="form-control">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                <select id="select2" name="select2" class="form-control" [ngModel]="modData?.createBy" (ngModelChange)="modData.createBy = $event" required>
+                  <option [value]="datast.username" *ngFor="let datast of listUser; let idx = index">{{datast.username}}</option>
                 </select>
               </div>
-            </div> -->
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div *ngFor="let alert of alertsDismiss">
+              <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true">{{ alert.msg }}</alert>
+            </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="addModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="save(1)">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="save(1)" *ngIf="modData?.stage != null && modData?.createBy != null">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -284,18 +287,6 @@
                 <textarea id="memo-input" name="textarea-input" rows="9" class="form-control" [ngModel]="modData?.memo2" (ngModelChange)="modData.memo2 = $event"></textarea>
               </div>
             </div>
-            <!--
-            <div class="form-group row">
-              <label class="col-md-3 col-form-label" for="select1">Input By</label>
-              <div class="col-md-9">
-                <select id="selectuser" name="select1" class="form-control">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
-                </select>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -306,3 +297,23 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete</h4>
+        <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Delete this Stage? {{modData?.stage}}  </p> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="deleteModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteStage(modData)">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

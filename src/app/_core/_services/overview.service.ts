@@ -47,4 +47,8 @@ export class OverviewService {
     console.log("addmemo2", proj);
     return this.http.post(this.baseUrl + 'overview/add-memo2', proj);
   }
+
+  deleteStage(proj: ProjectList) {
+    return this.http.post(this.baseUrl + 'overview/delete-stage', proj);
+  }
 }

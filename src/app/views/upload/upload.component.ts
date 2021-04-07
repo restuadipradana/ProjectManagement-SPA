@@ -1,3 +1,4 @@
+import { UploadService } from './../../_core/_services/upload.service';
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { Select2OptionData } from 'ng-select2';
@@ -25,7 +26,7 @@ export class UploadComponent implements OnInit {
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
 
-  constructor(private _supportSvc: SupportService, private http: HttpClient, @Inject(DOCUMENT) private _document: Document) { }
+  constructor(private _supportSvc: SupportService, private http: HttpClient, @Inject(DOCUMENT) private _document: Document, private _uploadSvc: UploadService) { }
 
   ngOnInit(): void {
     this.dynamic = 45;
@@ -65,16 +66,20 @@ export class UploadComponent implements OnInit {
     let fileToUpload = <File>files[0];
     const formData = new FormData();
     formData.append(this.weekId, fileToUpload, fileToUpload.name);
-    this.http.post('https://localhost:5001/api/upload/upload', formData, {reportProgress: true, observe: 'events'})
-      .subscribe(event => {
+    this._uploadSvc.uploadExcel(formData)
+    //this.http.post('https://localhost:5001/api/upload/upload', formData, {reportProgress: true, observe: 'events'})
+      .subscribe((event) => {
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round(100 * event.loaded / event.total);
         else if (event.type === HttpEventType.Response) {
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
-          this._document.defaultView.location.reload();
+          //this._document.defaultView.location.reload();
         }
-        console.log(this.progress);
+        console.log("suces", event);
+      },
+      (error) => {
+        console.log("ero", error.error);
       });
       this.weekId = '';
       

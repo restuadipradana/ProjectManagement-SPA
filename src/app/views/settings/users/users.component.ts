@@ -1,7 +1,8 @@
 import { UserList } from './../../../_core/_models/user-list';
 import { SupportService } from './../../../_core/_services/support.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap/modal';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,7 @@ export class UsersComponent implements OnInit {
   modalUser: UserList;
   @ViewChild('largeModal') public largeModal: ModalDirective;
 
-  constructor(private _supportSvc: SupportService) { }
+  constructor(private _supportSvc: SupportService, @Inject(DOCUMENT) private _document: Document) { }
 
   ngOnInit(): void {
     this.getUserList();
@@ -50,7 +51,8 @@ export class UsersComponent implements OnInit {
     {
       this.showNotif("Cannot empty");
     }
-    this.getUserList();
+    this._document.defaultView.location.reload();
+    //this.getUserList();
   }
 
   getUserList(){
@@ -85,7 +87,8 @@ export class UsersComponent implements OnInit {
       }
     );
     this.largeModal.hide();
-    this.getUserList();
+    this._document.defaultView.location.reload();
+    //this.getUserList();
 
   }
 

@@ -1,3 +1,4 @@
+import { UserList } from './../../../_core/_models/user-list';
 import { SupportService } from './../../../_core/_services/support.service';
 import { StageList } from './../../../_core/_models/stage-list';
 import { OverviewService } from './../../../_core/_services/overview.service';
@@ -20,6 +21,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
 
   @ViewChild('addModal') public addModal: ModalDirective;
   @ViewChild('memo2Modal') public memo2Modal: ModalDirective;
+  @ViewChild('deleteModal') public deleteModal: ModalDirective;
 
   dtOptions: DataTables.Settings[] = [];
   dtTrigger: Subject<any> = new Subject();
@@ -55,6 +57,10 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
 
   modData: ProjectList;
   listStage: StageList[];
+
+  isDisableBtn: boolean;
+  alertsDismiss: any = [];
+  listUser: UserList[];
   
   constructor(private _overviewSvc: OverviewService, private _supportSvc: SupportService) { }
 
@@ -82,10 +88,10 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
           });
       },
       columns: [
-        { data: 'applicant' },
-        { data: 'pic'},
+        { data: 'applicant'  , 'orderable': false },
+        { data: 'pic' , 'orderable': false },
         { data: 'requestFormNo' },
-        { data: 'requestFormDesc' }
+        { data: 'requestFormDesc'  , 'orderable': false  }
       ],
       order: [2, 'asc'],
       autoWidth: false
@@ -206,17 +212,31 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
           console.log("Error: " , error.error.text);
         }
       );
+      this.getUserList();
+      this.modData.stage = null;
+      this.modData.stageActualFinish = null;
+      this.modData.stageEstimateFinish = null;
+      this.modData.testDateEstimate = null;
+      this.modData.userExpectedDate = null;
+      this.modData.applyDate = null;
+      this.modData.createBy = null;
+
       this.addModal.show();
     }
     if (kind == 2) {
       this.modData = data;
       this.memo2Modal.show();
     }
+    if (kind == 3) {
+      this.modData = data;
+      this.deleteModal.show();
+    }
   }
 
   save(kind: number) {
     //1 add stage, 2 add memo2
     if (kind == 1) {
+      console.log("before save", this.modData);
       this._overviewSvc.addStage(this.modData).subscribe(
         (res: any) => {
           console.log(res);
@@ -224,7 +244,8 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
           this.rerender();
         },
         (error) => {
-          console.log(error.error);
+          console.log(error);
+          this.showNotif("Week not found! cannot save, please generate week first for this year");
         }
       );
     }
@@ -240,6 +261,39 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+
+  showNotif(message: any) {
+    this.alertsDismiss.push({
+      type: 'warning',
+      msg: message,
+      timeout: 3000
+    });
+  }
+
+  getUserList(){
+    this._supportSvc.getUserList().subscribe(
+      (res: any) => {
+        this.listUser = res;
+        console.log(this.listUser);
+      },
+      (error) => {
+        console.log("Error: " , error.error.text);
+        this.showNotif(error.error.text);
+      }
+    );
+  }
+
+  deleteStage(data: ProjectList){
+    this._overviewSvc.deleteStage(data).subscribe(
+      () => {
+        this.deleteModal.hide();
+        this.rerender();
+      },
+      (error) => {
+        console.log("Error: " , error.error.text);
+      }
+    );
   }
 
 
