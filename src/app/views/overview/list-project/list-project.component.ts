@@ -26,7 +26,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
   dtOptions: DataTables.Settings[] = [];
   dtTrigger: Subject<any> = new Subject();
 
-  @ViewChild('projTabs', { static: false }) projTabs: TabsetComponent;  
+  @ViewChild('projTabs', { static: false }) projTabs: TabsetComponent;
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>; //gatau biar bisa rerender multiple table
   //dtElement: DataTableDirective;
@@ -55,13 +55,13 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
   reqformDescsrc: string = "";
   stagesrc: string ="";
 
-  modData: ProjectList;
+  modData: any = {};
   listStage: StageList[];
 
   isDisableBtn: boolean;
   alertsDismiss: any = [];
   listUser: UserList[];
-  
+
   constructor(private _overviewSvc: OverviewService, private _supportSvc: SupportService) { }
 
   ngOnInit(): void {
@@ -132,7 +132,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
         { data: 'week' , 'orderable': false },
         { data: 'createAt' , 'orderable': false }
       ],
-      order: [2, 'asc'],      
+      order: [2, 'asc'],
       autoWidth: false,
     };
 
@@ -173,7 +173,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
         { data: 'createAt' , 'orderable': false },
         { data: 'createBy' , 'orderable': false }
       ],
-      order: [2, 'asc'],      
+      order: [2, 'asc'],
       autoWidth: false,
     };
   }
@@ -199,10 +199,12 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  
+
   //modal (kind 1 add stage, 2 add memo2)
   openModal(data: ProjectList, kind: number) {
     if (kind == 1) {
+      this.modData = {};
+      const asm = data;
       this.modData = data;
       this._supportSvc.getStage(data.stage).subscribe(
         (res: any) => {
@@ -213,13 +215,13 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
         }
       );
       this.getUserList();
-      this.modData.stage = null;
+      //this.modData.stage = null;
       this.modData.stageActualFinish = null;
       this.modData.stageEstimateFinish = null;
       this.modData.testDateEstimate = null;
       this.modData.userExpectedDate = null;
       this.modData.applyDate = null;
-      this.modData.createBy = null;
+      //this.modData.createBy = null;
 
       this.addModal.show();
     }
@@ -231,6 +233,12 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       this.modData = data;
       this.deleteModal.show();
     }
+  }
+
+  hideModal() {
+    this.rerender();
+    this.addModal.hide();
+    this.memo2Modal.hide();
   }
 
   save(kind: number) {
@@ -302,14 +310,14 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
     console.log(data);
     switch(page) {
       case 1: {
-        this.reqformNosrc = data.requestFormNo;        
+        this.reqformNosrc = data.requestFormNo;
         this.reqformDescsrc = data.requestFormDesc;
         this.rerender();
         this.goSecondTab();
         break;
       }
       case 2: {
-        this.reqformNosrc = data.requestFormNo;        
+        this.reqformNosrc = data.requestFormNo;
         this.reqformDescsrc = data.requestFormDesc;
         this.stagesrc = data.stage;
         this.rerender();

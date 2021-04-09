@@ -8,7 +8,7 @@
       <tabset #projTabs >
 
         <tab (selectTab)="goFirstTab()"
-        [heading]="'Overview'" 
+        [heading]="'Overview'"
         [active]="true"
         [disabled]="false">
         <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover" style="width: 100%;">
@@ -164,7 +164,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{modData?.requestFormNo}}</h4>
-        <button type="button" class="close" (click)="addModal.hide()" aria-label="Close">
+        <button type="button" class="close" (click)="hideModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -244,7 +244,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="addModal.hide()">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="hideModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="save(1)" *ngIf="modData?.stage != null && modData?.createBy != null">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
@@ -256,7 +256,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{modData?.requestFormNo}}</h4>
-        <button type="button" class="close" (click)="memo2Modal.hide()" aria-label="Close">
+        <button type="button" class="close" (click)="hideModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -291,7 +291,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="memo2Modal.hide()">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="hideModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="save(2)">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
@@ -308,7 +308,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Delete this Stage? {{modData?.stage}}  </p> 
+        <p>Delete this Stage? {{modData?.stage}}  </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="deleteModal.hide()">Cancel</button>

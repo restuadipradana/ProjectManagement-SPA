@@ -23,14 +23,15 @@
         <button type="button" class="btn btn-block btn-success" (click)="uploadFile(file.files)" >Upload</button>
       </div>
       <hr>
-      <div >
-        <div *ngFor="let alert of alertsDismiss">
-          <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true">{{ alert.msg }}</alert>
-        </div>
-      </div>
       <div class="upload" *ngIf="progress > 0">
         <small><em>Status</em></small>
         <progressbar class="progress progress-success" [value]="progress" [max]="100" type="success"><b>{{progress}}%</b></progressbar>
+      </div>
+      <hr>
+      <div >
+        <div *ngFor="let alert of alertsDismiss">
+          <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true"><p>{{ alert.msg }}</p></alert>
+        </div>
       </div>
     </div>
 

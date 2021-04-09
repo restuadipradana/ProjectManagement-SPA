@@ -4,7 +4,7 @@ export interface ProjectList {
   system: string;
   desc: string;
   applicant: string;
-  pIC: string;
+  pic: string;
   requestFormNo: string;
   requestFormDesc: string;
   stage: string;

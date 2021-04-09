@@ -39,7 +39,7 @@ export class UploadComponent implements OnInit {
   }
 
   getListWeek() {
-    this._supportSvc.getWeekList().subscribe(res => {
+    this._supportSvc.getNoUploadWeekList().subscribe(res => {
       this.weeks = res.map(item => {
         return { id: item.id, text: item.week };
       });
@@ -47,11 +47,11 @@ export class UploadComponent implements OnInit {
     })
   }
 
-  showNotif(message: any) {
+  showNotif(message: any, tipe: string) {
     this.alertsDismiss.push({
-      type: 'info',
+      type: tipe,
       msg: message,
-      timeout: 3000
+      timeout: 5200
     });
   }
 
@@ -60,7 +60,7 @@ export class UploadComponent implements OnInit {
       return;
     }
     if (this.weekId === null || this.weekId === '') {
-      this.showNotif("Select week first!")
+      this.showNotif("Select week first!", "warning")
       return;
     }
     let fileToUpload = <File>files[0];
@@ -74,15 +74,21 @@ export class UploadComponent implements OnInit {
         else if (event.type === HttpEventType.Response) {
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
+          this.showNotif("Upload successfully! This page will refresh", "info")
           //this._document.defaultView.location.reload();
         }
         console.log("suces", event);
+
       },
       (error) => {
         console.log("ero", error.error);
+        this.showNotif(error.error.restu, "danger")
       });
       this.weekId = '';
-      
+      setTimeout(() => {
+        this._document.defaultView.location.reload();
+      }, 6000);
+
   }
 
 }

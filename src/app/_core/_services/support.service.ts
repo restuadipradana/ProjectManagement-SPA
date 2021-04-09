@@ -17,6 +17,9 @@ export class SupportService {
   getWeekList(){
     return this.http.get<any>(this.baseUrl + 'settings/get-week');
   }
+  getNoUploadWeekList(){
+    return this.http.get<any>(this.baseUrl + 'settings/nouploaded-week');
+  }
   generateWeek(year: string){
     console.log("tahun ", year)
     return this.http.get<string>(this.baseUrl + 'settings/generate-week', { params: {year:year} } );
