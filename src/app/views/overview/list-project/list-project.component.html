@@ -11,13 +11,13 @@
         [heading]="'Overview'"
         [active]="true"
         [disabled]="false">
-        <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover" style="width: 100%;">
+        <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover sortable" style="width: 100%;">
           <thead>
             <tr>
-              <th>Applicant</th>
-              <th style="min-width: 100px">IT PIC</th>
-              <th>Request From No</th>
-              <th>Request Form Description</th>
+              <th style="width: 100px">Applicant</th>
+              <th style="width: 100px">IT PIC</th>
+              <th style="width: 150px">Request From No</th>
+              <th style="width: max-content;">Request Form Description</th>
             </tr>
           </thead>
           <tbody *ngIf="listProjL1?.length != 0">
@@ -42,7 +42,7 @@
         [active]="secondActive"
         [disabled]="secondDisabled">
         <div style="overflow:auto;" >
-        <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover" >
+        <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
           <thead>
             <tr>
               <th>Add Stage#</th>
@@ -100,7 +100,7 @@
         [active]="thirdActive"
         [disabled]="thirdDisabled">
         <div style="overflow:auto;" >
-          <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover" >
+          <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
             <thead>
               <tr>
                 <th>Add Memo2#</th>

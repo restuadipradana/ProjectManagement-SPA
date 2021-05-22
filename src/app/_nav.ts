@@ -45,6 +45,34 @@ export const navItems: INavData[] = [
       }
     ]
   },
+  {
+    name: 'Meeting Minute',
+    url: '/overview',
+    children: [
+      {
+        name: '1. Maintain',
+        url: '/upload',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: '2. Query',
+        url: '/overview/weekly',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: '3. Report',
+        url: '/upload',
+        icon: 'icon-puzzle',
+        children: [
+          {
+            name: '1.1 List Project',
+            url: '/upload',
+            class: "menu-margin",
+          }
+        ]
+      }
+    ]
+  },
 
 
 ];

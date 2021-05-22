@@ -75,19 +75,23 @@ export class UploadComponent implements OnInit {
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
           this.showNotif("Upload successfully! This page will refresh", "info")
-          //this._document.defaultView.location.reload();
+          setTimeout(() => {
+            this._document.defaultView.location.reload();
+          }, 4000);
         }
         console.log("suces", event);
 
       },
       (error) => {
         console.log("ero", error.error);
-        this.showNotif(error.error.restu, "danger")
+        this.showNotif(error.error.restu, "danger");
+        setTimeout(() => {
+          this._document.defaultView.location.reload();
+        }, 6000);
+
       });
       this.weekId = '';
-      setTimeout(() => {
-        this._document.defaultView.location.reload();
-      }, 6000);
+
 
   }
 

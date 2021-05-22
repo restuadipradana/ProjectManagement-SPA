@@ -70,7 +70,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       pageLength: 10,
       serverSide: true,
       processing: true,
-      searching: false,
+      searching: true,
       ajax: (dataTablesParameters: any, callback) => {
         console.log("st")
         dataTablesParameters.searchCriteria = this.searchCriteria;
