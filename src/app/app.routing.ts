@@ -12,7 +12,7 @@ import { RegisterComponent } from './views/register/register.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'overview/list-project',
+    redirectTo: 'dashboard', //change route default landing page here
     pathMatch: 'full',
   },
   {

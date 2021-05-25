@@ -55,7 +55,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
   reqformDescsrc: string = "";
   stagesrc: string ="";
 
-  modData: any = {};
+  modData: ProjectList;
   listStage: StageList[];
 
   isDisableBtn: boolean;
@@ -203,9 +203,10 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
   //modal (kind 1 add stage, 2 add memo2)
   openModal(data: ProjectList, kind: number) {
     if (kind == 1) {
-      this.modData = {};
       const asm = data;
-      this.modData = data;
+      //this.modData = data;
+      this.modData = Object.assign({}, data);
+
       this._supportSvc.getStage(data.stage).subscribe(
         (res: any) => {
           this.listStage = res;
@@ -221,8 +222,9 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       this.modData.testDateEstimate = null;
       this.modData.userExpectedDate = null;
       this.modData.applyDate = null;
-      //this.modData.createBy = null;
 
+      //this.modData.createBy = null;
+      console.log("md ", this.modData);
       this.addModal.show();
     }
     if (kind == 2) {

@@ -69,7 +69,8 @@ export class UsersComponent implements OnInit {
   }
 
   showEdit(clicked: UserList){
-    this.modalUser = clicked;
+    this.modalUser = Object.assign({}, clicked);
+    //this.modalUser = clicked;
   }
   editAction(clickedData: UserList){
     this.showEdit(clickedData);
