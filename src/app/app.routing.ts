@@ -51,6 +51,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'meeting-minutes',
+        loadChildren: () => import('./views/meetingminutes/meetingminutes.module').then(m => m.MeetingminutesModule)
+      },
+      {
         path: 'download-report',
         loadChildren: () => import('./views/download-report/download-report.module').then(m => m.DownloadReportModule)
       },

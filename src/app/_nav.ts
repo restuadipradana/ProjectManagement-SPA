@@ -61,9 +61,16 @@ export const navItems: INavData[] = [
         icon: 'icon-puzzle'
       },
       {
-        name: '2. Query',
-        url: '/overview/weekly',
-        icon: 'icon-puzzle'
+        name: '2. Tansaction',
+        url: '',
+        icon: 'icon-puzzle',
+        children: [
+          {
+            name: '2.1 List Meeting',
+            url: '/meeting-minutes/list-meeting',
+            class: "menu-margin",
+          }
+        ]
       },
       {
         name: '3. Report',

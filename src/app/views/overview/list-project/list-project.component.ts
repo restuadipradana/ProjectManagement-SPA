@@ -72,14 +72,12 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       processing: true,
       searching: true,
       ajax: (dataTablesParameters: any, callback) => {
-        console.log("st")
         dataTablesParameters.searchCriteria = this.searchCriteria;
-        console.log(dataTablesParameters)
-        console.log("dt")
+        console.log("param1: ", dataTablesParameters)
         this._overviewSvc.listProjL1(dataTablesParameters)
           .subscribe(resp => {
             this.listProjL1 = resp.data;
-            console.log(resp);
+            console.log("resp1: ", resp);
             callback({
               recordsTotal: resp.recordsTotal,
               recordsFiltered: resp.recordsFiltered,
@@ -105,7 +103,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         dataTablesParameters.searchCriteria = this.searchCriteria2;
-        console.log(dataTablesParameters)
+        console.log("param2: ", dataTablesParameters)
         this._overviewSvc.listProjL2(dataTablesParameters)
           .subscribe(resp => {
             this.listProjL2 = resp.data;
@@ -144,7 +142,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
       searching: false,
       ajax: (dataTablesParameters: any, callback) => {
         dataTablesParameters.searchCriteria = this.searchCriteria3;
-        console.log(dataTablesParameters)
+        console.log("param3: ", dataTablesParameters)
         this._overviewSvc.listProjL3(dataTablesParameters)
           .subscribe(resp => {
             this.listProjL3 = resp.data;
