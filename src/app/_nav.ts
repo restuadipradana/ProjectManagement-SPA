@@ -57,7 +57,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: '1. Maintain',
-        url: '/upload',
+        url: '/meeting-minutes/upload',
         icon: 'icon-puzzle'
       },
       {
