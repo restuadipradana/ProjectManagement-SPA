@@ -63,7 +63,7 @@
           <h4>{{meeting.m_Name}}</h4>
         </div>
         <div class="form-group col-md-2">
-          <button type="button" class="btn btn-primary pull-right" >
+          <button type="button" class="btn btn-primary pull-right" (click)="addModal.show()">
             Add
           </button>
         </div>
@@ -72,7 +72,7 @@
     </div>
     <div class="card-body">
       <div style="overflow:auto;" >
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" style="width: 100%;">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover sortable" style="width: 100%;">
         <thead>
           <tr>
             <th>Action</th>
@@ -108,7 +108,7 @@
             <td style="min-width: 90px">{{ data.latestEstFinish | date: "yyyy/MM/dd" }}</td>
             <td>{{ data.remark }}</td>
             <td>{{ data.status }}</td>
-            <td style="min-width: 150px">{{ data.statusDesc }}</td>
+            <td style="min-width: 100px">{{ data.statusDesc }}</td>
             <td>{{ data.revision }}</td>
             <td>{{ data.createAt | date: "yyyy/MM/dd" }}</td>
           </tr>
@@ -124,5 +124,102 @@
   </div>
 </div>
 
+
+<!--MODAL BRO-->
+
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Item</h4>
+        <button type="button" class="close" (click)="addModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md">
+            <div class="row">
+              <div class="form-group col-sm-8">
+                <label for="itemNo">ID Item</label>
+                <input type="text" [(ngModel)]="detailStore.itemNo" class="form-control" id="itemNo">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="case-kind">Case Kind</label>
+                <input type="text" [(ngModel)]="detailStore.caseKind" class="form-control" id="case-kind">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="userPIC">User PIC</label>
+                <input type="text" [(ngModel)]="detailStore.userPIC" class="form-control" id="userPIC">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="itPIC">IT PIC</label>
+                <input type="text" [(ngModel)]="detailStore.itpic" class="form-control" id="itPIC">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="crd">CRD</label>
+                <input type="date" [(ngModel)]="detailStore.crd" class="form-control" id="crd">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="firstEst">First Estimate Finish Date</label>
+                <input type="date" [(ngModel)]="detailStore.firstEstFinish" class="form-control" id="firstEst">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="latestEst">Latest Estimate Finish Date</label>
+                <input type="date" [(ngModel)]="detailStore.latestEstFinish" class="form-control" id="latestEst">
+              </div>
+            </div><!--/.row-->
+            <div class="form-group">
+              <label for="remark">Remark</label>
+              <input type="text" [(ngModel)]="detailStore.remark" class="form-control" id="remark">
+            </div>
+            <div class="form-group">
+              <label for="caseStatus">Case Status</label>
+              <input type="text" [(ngModel)]="detailStore.status" class="form-control" id="caseStatus">
+            </div>
+            <div class="form-group">
+              <label for="statusDesc">Status Update Desc.</label>
+              <input type="text" [(ngModel)]="detailStore.statusDesc" class="form-control" id="statusDesc">
+            </div>
+          </div>
+        </div><!--/.row-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="addModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(1)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit User</h4>
+        <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md">
+            
+          </div>
+        </div><!--/.row-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(2)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 

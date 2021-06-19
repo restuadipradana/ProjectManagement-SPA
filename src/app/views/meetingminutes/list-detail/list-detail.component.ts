@@ -23,6 +23,7 @@ export class ListDetailComponent implements OnInit {
   meetingDetailList: MeetingDetail[];
   meeting: Meeting;
   selectedDetail: MeetingDetail;
+  detailStore: any = {};
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -107,6 +108,13 @@ export class ListDetailComponent implements OnInit {
         console.log("Error: " , error.error.text);
       }
     );
+  }
+
+  // 1 add, 2 save
+  save(flag: number) {
+    this.detailStore.crd = new Date (this.detailStore.crd);
+    console.log(this.detailStore);
+   
   }
 
 
