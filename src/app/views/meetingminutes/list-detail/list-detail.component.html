@@ -1,0 +1,128 @@
+<div class="animated fadeIn">
+  <div class="card card-accent-primary">
+    <div class="card-header">
+      <h4>{{meeting?.mM_Id}}</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="col-md-2">
+          <p><b>MM ID [會議記錄ID]</b> </p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.mM_Id}}</p>
+        </div>
+        <div class="col-md-2">
+          <p><b>Chairman [會議主席]</b></p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.chairman}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2">
+          <p><b>Meeting Name [會議名稱]</b> </p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.m_Name}}</p>
+        </div>
+        <div class="col-md-2">
+          <p><b>Recorder [紀錄者]</b></p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.recorder}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2">
+          <p><b>Meeting Time [會議日期]</b> </p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{meeting.m_TimeEnd | date: "yyyy/MM/dd HH:mm" }}</p>
+        </div>
+        <div class="col-md-2">
+          <p><b>Attendees [出席人員]</b></p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.attendees}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2">
+          <p><b>Meeting Subject [會議主題]</b> </p>
+        </div>
+        <div class="col-md-4">
+          <p>{{meeting.m_Subject}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <h4>{{meeting.m_Name}}</h4>
+        </div>
+        <div class="form-group col-md-2">
+          <button type="button" class="btn btn-primary pull-right" >
+            Add
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <div style="overflow:auto;" >
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" style="width: 100%;">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>No.</th>
+            <th>Discuss case</th>
+            <th>Case kind</th>
+            <th>User PIC</th>
+            <th>IT PIC</th>
+            <th>CRD</th>
+            <th>First Estimate Finish Date</th>
+            <th>Latest Estimate Finish Date</th>
+            <th>Remark</th>
+            <th>Case Status</th>
+            <th>Status update Description</th>
+            <th>Revision</th>
+            <th>Date Create</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="meetingDetailList?.length != 0">
+          <tr *ngFor="let data of meetingDetailList" (click)="clickRow(data)">
+            <td>
+              <button type="button"  class="btn btn-danger btn-sm"  >
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </td>
+            <td style="min-width: 100px">{{ data.itemNo }}</td>
+            <td><pre>{{ data.description }}</pre></td>
+            <td>{{ data.caseKind }}</td>
+            <td style="min-width: 90px">{{ data.userPIC }}</td>
+            <td style="min-width: 90px">{{ data.itpic }}</td>
+            <td>{{ data.crd | date: "yyyy/MM/dd" }}</td>
+            <td style="min-width: 90px">{{ data.firstEstFinish | date: "yyyy/MM/dd" }}</td>
+            <td style="min-width: 90px">{{ data.latestEstFinish | date: "yyyy/MM/dd" }}</td>
+            <td>{{ data.remark }}</td>
+            <td>{{ data.status }}</td>
+            <td style="min-width: 150px">{{ data.statusDesc }}</td>
+            <td>{{ data.revision }}</td>
+            <td>{{ data.createAt | date: "yyyy/MM/dd" }}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="meetingDetailList?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

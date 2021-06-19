@@ -1,1 +1,50 @@
-<p>list-meetings works!</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h4>Meeting List</h4>
+    </div>
+    <div class="card-body">
+      <div style="overflow:auto;" >
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Meeting Minute ID</th>
+            <th>Meeting Name</th>
+            <th>Meeting Time</th>
+            <th>Chariman</th>
+            <th>Recorder</th>
+            <th>Attendees</th>
+            <th>Subject</th>
+            <th>Date Create</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="meetingList?.length != 0">
+          <tr *ngFor="let data of meetingList" (click)="clickRow(data)">
+            <td>
+              <button type="button"  class="btn btn-danger btn-sm"  >
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </td>
+            <td>{{ data.mM_Id }}</td>
+            <td>{{ data.m_Name }}</td>
+            <td>{{ data.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{data.m_TimeEnd | date: "yyyy/MM/dd HH:mm"}}</td>
+            <td>{{ data.chairman }}</td>
+            <td>{{ data.recorder }}</td>
+            <td>{{ data.attendees }}</td>
+            <td>{{ data.m_Subject }}</td>
+            <td>{{ data.createAt | date: "yyyy/MM/dd HH:mm" }}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="meetingList?.length == 0">
+          <tr>
+            <td colspan="3" class="no-data-available">No data!</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
