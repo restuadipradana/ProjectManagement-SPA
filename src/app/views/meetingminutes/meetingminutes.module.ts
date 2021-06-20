@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ListDetailComponent } from './list-detail/list-detail.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from "angular-datatables";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [ListMeetingsComponent, MUploadComponent, ListDetailComponent],
@@ -19,7 +20,8 @@ import { DataTablesModule } from "angular-datatables";
     AlertModule.forRoot(),
     FormsModule,
     ModalModule.forRoot(),
-    DataTablesModule
+    DataTablesModule,
+    CKEditorModule
   ]
 })
 export class MeetingminutesModule { }

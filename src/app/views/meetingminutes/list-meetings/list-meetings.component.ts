@@ -18,6 +18,11 @@ export class ListMeetingsComponent implements OnInit {
   searchtxt: string;
   meetingList: Meeting[];
   selectedMeeting: Meeting;
+  meetingStore: any = {};
+  alertsDismiss: any = [];
+
+  @ViewChild('addModal') public addModal: ModalDirective;
+  @ViewChild('deleteModal') public deleteModal: ModalDirective;
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -71,18 +76,73 @@ export class ListMeetingsComponent implements OnInit {
 
   rerender(): void {
     this.searchCriteria.isPageLoad = false;
-    this.searchCriteria.filter = this.searchtxt;
+    this.searchCriteria.filter = '';
+    this.searchCriteria.filter2 = '';
+    this.searchCriteria.filter3 = '';
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
       this.dtTrigger.next();
     });
   }
 
-  clickRow(dataclicked: Meeting){
+  // 1 open detail, 2 open dialog delete, 3 export excel
+  clickRow(dataclicked: Meeting, kind: number){
     console.log(dataclicked);
-    this._meetingSvc.chgFuncMGuid(dataclicked.id);
+    this.meetingStore = {};
+    this.meetingStore = Object.assign({}, dataclicked); //stroe dataclicekd to meetingstore
+    //this._meetingSvc.chgFuncMGuid(dataclicked.id); //deprecated
     //this.router.navigate(['/meeting-minutes/list-detail']);
-    this.router.navigate(['/meeting-minutes/list-detail/'+dataclicked.id]);
+    if (kind == 1) {
+      this.router.navigate(['/meeting-minutes/list-detail/'+dataclicked.id]);
+    }
+    else if (kind == 2) {
+      this.deleteModal.show();
+    }
+  }
+
+  addOpen() {
+    this.meetingStore = {};
+    Object.assign(this.meetingStore, {}) //reset value before add
+    this.addModal.show();
+  }
+
+  save() {
+    console.log(this.meetingStore);
+    this._meetingSvc.addMeeting(this.meetingStore).subscribe(
+      () => {
+        this.addModal.hide();
+        this.showNotif("Success to Add", "success");
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.ajax.reload(null, false);
+        });
+      },
+      (error) => {
+        this.addModal.hide();
+        console.log(error);
+        this.showNotif(error.error, "warning");
+      }
+    );
+  }
+
+  deleteMeeting() {
+    this._meetingSvc.deleteMeeting(this.meetingStore).subscribe(() => {
+      this.deleteModal.hide();
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.ajax.reload(null, false);
+      });
+    }, error => {
+      console.log(error.error);
+    });
+    this.meetingStore =  {};
+    Object.assign(this.meetingStore, {}) //reset value after delete
+  }
+
+  showNotif(message: any, typ: string) {
+    this.alertsDismiss.push({
+      type: typ,
+      msg: message,
+      timeout: 3000
+    });
   }
 
 }

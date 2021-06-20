@@ -1,7 +1,21 @@
 <div class="animated fadeIn">
+  <div >
+    <div *ngFor="let alert of alertsDismiss">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true"><p>{{ alert.msg }}</p></alert>
+    </div>
+  </div>
   <div class="card">
     <div class="card-header">
-      <h4>Meeting List</h4>
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <h4>Meeting List</h4>
+        </div>
+        <div class="form-group col-md-2">
+          <button type="button" class="btn btn-primary pull-right" (click)="addOpen()">
+            Add
+          </button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div style="overflow:auto;" >
@@ -20,20 +34,31 @@
           </tr>
         </thead>
         <tbody *ngIf="meetingList?.length != 0">
-          <tr *ngFor="let data of meetingList" (click)="clickRow(data)">
+          <tr *ngFor="let data of meetingList" >
             <td>
-              <button type="button"  class="btn btn-danger btn-sm"  >
-                <i class="fa fa-trash-o"></i>
-              </button>
+              <tr>
+                <td>
+                  <button type="button"  class="btn btn-success btn-sm"  (click)="clickRow(data, 3)">
+                    <i class="fa fa-print"></i>
+                  </button>
+                </td>
+                <td>
+                  <button type="button"  class="btn btn-danger btn-sm"  data-toggle="modal" (click)="clickRow(data, 2)" >
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              
+              
             </td>
-            <td>{{ data.mM_Id }}</td>
-            <td>{{ data.m_Name }}</td>
-            <td>{{ data.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{data.m_TimeEnd | date: "yyyy/MM/dd HH:mm"}}</td>
-            <td>{{ data.chairman }}</td>
-            <td>{{ data.recorder }}</td>
-            <td>{{ data.attendees }}</td>
-            <td>{{ data.m_Subject }}</td>
-            <td>{{ data.createAt | date: "yyyy/MM/dd HH:mm" }}</td>
+            <td style="min-width: 150px" (click)="clickRow(data, 1)">{{ data.mM_Id }}</td>
+            <td style="min-width: 150px" (click)="clickRow(data, 1)">{{ data.m_Name }}</td>
+            <td (click)="clickRow(data, 1)">{{ data.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{data.m_TimeEnd | date: "yyyy/MM/dd HH:mm"}}</td>
+            <td (click)="clickRow(data, 1)">{{ data.chairman }}</td>
+            <td (click)="clickRow(data, 1)">{{ data.recorder }}</td>
+            <td (click)="clickRow(data, 1)">{{ data.attendees }}</td>
+            <td (click)="clickRow(data, 1)">{{ data.m_Subject }}</td>
+            <td (click)="clickRow(data, 1)">{{ data.createAt | date: "yyyy/MM/dd HH:mm" }}</td>
           </tr>
         </tbody>
         <tbody *ngIf="meetingList?.length == 0">
@@ -48,3 +73,87 @@
 </div>
 
 
+<!--MODAL BRO-->
+
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Meeting</h4>
+        <button type="button" class="close" (click)="addModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md">
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="mM_Id">MM ID [會議記錄ID]</label>
+                <input type="text" [(ngModel)]="meetingStore.mM_Id" class="form-control" id="mM_Id">
+              </div>
+              <div class="form-group col-sm-8">
+                <label for="m_Name">Meeting Name [會議名稱]</label>
+                <input type="text" [(ngModel)]="meetingStore.m_Name" class="form-control" id="m_Name">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="startt">Starting Time</label>
+                <input type="datetime-local" [(ngModel)]="meetingStore.m_TimeStart" class="form-control" id="startt">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="endt">Ending Time</label>
+                <input type="datetime-local" [(ngModel)]="meetingStore.m_TimeEnd" class="form-control" id="endt">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-3">
+                <label for="chairman">Chairman [會議主席]</label>
+                <input type="text" [(ngModel)]="meetingStore.chairman" class="form-control" id="chairman">
+              </div>
+              <div class="form-group col-sm-3">
+                <label for="recorder">Recorder [紀錄者]</label>
+                <input type="text" [(ngModel)]="meetingStore.recorder" class="form-control" id="recorder">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="attendees">Attendees [出席人員]</label>
+                <input type="text" [(ngModel)]="meetingStore.attendees" class="form-control" id="attendees">
+              </div>
+            </div><!--/.row-->
+            <div class="form-group">
+              <label for="m_Subject">Meeting Subject [會議主題]</label>
+              <input type="text" [(ngModel)]="meetingStore.m_Subject" class="form-control" id="m_Subject">
+            </div>
+            
+          </div>
+        </div><!--/.row-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="addModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete</h4>
+        <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this Meeting Minute? </p> {{meetingStore?.mM_Id}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="deleteModal.hide()">Close</button>
+        <button type="button" class="btn btn-danger"(click)="deleteMeeting()">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

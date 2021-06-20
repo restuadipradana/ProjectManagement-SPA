@@ -9,13 +9,13 @@
           <p><b>MM ID [會議記錄ID]</b> </p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.mM_Id}}</p>
+          <p>{{meeting?.mM_Id}}</p>
         </div>
         <div class="col-md-2">
           <p><b>Chairman [會議主席]</b></p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.chairman}}</p>
+          <p>{{meeting?.chairman}}</p>
         </div>
       </div>
       <div class="form-group row">
@@ -23,13 +23,13 @@
           <p><b>Meeting Name [會議名稱]</b> </p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.m_Name}}</p>
+          <p>{{meeting?.m_Name}}</p>
         </div>
         <div class="col-md-2">
           <p><b>Recorder [紀錄者]</b></p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.recorder}}</p>
+          <p>{{meeting?.recorder}}</p>
         </div>
       </div>
       <div class="form-group row">
@@ -37,13 +37,13 @@
           <p><b>Meeting Time [會議日期]</b> </p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{meeting.m_TimeEnd | date: "yyyy/MM/dd HH:mm" }}</p>
+          <p>{{meeting?.m_TimeStart | date: "yyyy/MM/dd HH:mm" }} ~ {{meeting?.m_TimeEnd | date: "yyyy/MM/dd HH:mm" }}</p>
         </div>
         <div class="col-md-2">
           <p><b>Attendees [出席人員]</b></p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.attendees}}</p>
+          <p>{{meeting?.attendees}}</p>
         </div>
       </div>
       <div class="form-group row">
@@ -51,19 +51,26 @@
           <p><b>Meeting Subject [會議主題]</b> </p>
         </div>
         <div class="col-md-4">
-          <p>{{meeting.m_Subject}}</p>
+          <p>{{meeting?.m_Subject}}</p>
         </div>
       </div>
     </div>
   </div>
+
+  <div >
+    <div *ngFor="let alert of alertsDismiss">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true"><p>{{ alert.msg }}</p></alert>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-header">
       <div class="form-row">
         <div class="form-group col-md-10">
-          <h4>{{meeting.m_Name}}</h4>
+          <h4>{{meeting?.m_Name}}</h4>
         </div>
         <div class="form-group col-md-2">
-          <button type="button" class="btn btn-primary pull-right" (click)="addModal.show()">
+          <button type="button" class="btn btn-primary pull-right" (click)="addOpen()">
             Add
           </button>
         </div>
@@ -92,24 +99,33 @@
           </tr>
         </thead>
         <tbody *ngIf="meetingDetailList?.length != 0">
-          <tr *ngFor="let data of meetingDetailList" (click)="clickRow(data)">
+          <tr *ngFor="let data of meetingDetailList" >
             <td>
-              <button type="button"  class="btn btn-danger btn-sm"  >
-                <i class="fa fa-trash-o"></i>
-              </button>
+              <tr>
+                <td>
+                  <button type="button"  class="btn btn-success btn-sm"  (click)="clickRow(data, 1)">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                </td>
+                <td>
+                  <button type="button"  class="btn btn-danger btn-sm"  data-toggle="modal" (click)="clickRow(data, 2)" >
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
             </td>
-            <td style="min-width: 100px">{{ data.itemNo }}</td>
-            <td><pre>{{ data.description }}</pre></td>
-            <td>{{ data.caseKind }}</td>
-            <td style="min-width: 90px">{{ data.userPIC }}</td>
-            <td style="min-width: 90px">{{ data.itpic }}</td>
-            <td>{{ data.crd | date: "yyyy/MM/dd" }}</td>
-            <td style="min-width: 90px">{{ data.firstEstFinish | date: "yyyy/MM/dd" }}</td>
-            <td style="min-width: 90px">{{ data.latestEstFinish | date: "yyyy/MM/dd" }}</td>
-            <td>{{ data.remark }}</td>
-            <td>{{ data.status }}</td>
-            <td style="min-width: 100px">{{ data.statusDesc }}</td>
-            <td>{{ data.revision }}</td>
+            <td style="min-width: 100px" (click)="clickRow(data, 3)">{{ data.itemNo }}</td>
+            <td (click)="clickRow(data, 3)"><pre><div [innerHTML]=data.description></div></pre></td>
+            <td (click)="clickRow(data, 3)">{{ data.caseKind }}</td>
+            <td (click)="clickRow(data, 3)" style="min-width: 90px">{{ data.userPIC }}</td>
+            <td (click)="clickRow(data, 3)" style="min-width: 90px">{{ data.itpic }}</td>
+            <td (click)="clickRow(data, 3)">{{ data.crd | date: "yyyy/MM/dd" }}</td>
+            <td (click)="clickRow(data, 3)" style="min-width: 90px">{{ data.firstEstFinish | date: "yyyy/MM/dd" }}</td>
+            <td (click)="clickRow(data, 3)" style="min-width: 90px">{{ data.latestEstFinish | date: "yyyy/MM/dd" }}</td>
+            <td (click)="clickRow(data, 3)">{{ data.remark }}</td>
+            <td (click)="clickRow(data, 3)">{{ data.status }}</td>
+            <td (click)="clickRow(data, 3)" style="min-width: 100px">{{ data.statusDesc }}</td>
+            <td (click)="clickRow(data, 3)">{{ data.revision }}</td>
             <td>{{ data.createAt | date: "yyyy/MM/dd" }}</td>
           </tr>
         </tbody>
@@ -175,6 +191,10 @@
               </div>
             </div><!--/.row-->
             <div class="form-group">
+              <label for="remark">Discuss Case</label>
+              <ckeditor [(ngModel)]="detailStore.description" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="form-group">
               <label for="remark">Remark</label>
               <input type="text" [(ngModel)]="detailStore.remark" class="form-control" id="remark">
             </div>
@@ -201,7 +221,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Edit User</h4>
+        <h4 class="modal-title">Edit Item</h4>
         <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -210,13 +230,128 @@
 
         <div class="row">
           <div class="col-md">
-            
+            <div class="row">
+              <div class="form-group col-sm-8">
+                <label for="itemNo">ID Item</label>
+                <input type="text" [(ngModel)]="detailStore.itemNo" class="form-control" id="itemNoE" disabled>
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="case-kind">Case Kind</label>
+                <input type="text" [(ngModel)]="detailStore.caseKind" class="form-control" id="case-kindE">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="userPIC">User PIC</label>
+                <input type="text" [(ngModel)]="detailStore.userPIC" class="form-control" id="userPICE">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="itPIC">IT PIC</label>
+                <input type="text" [(ngModel)]="detailStore.itpic" class="form-control" id="itPICE">
+              </div>
+            </div><!--/.row-->
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="crd">CRD</label>
+                <input type="date" [(ngModel)]="detailStore.crd" class="form-control" id="crdE">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="firstEst">First Estimate Finish Date</label>
+                <input type="date" [(ngModel)]="detailStore.firstEstFinish" class="form-control" id="firstEstE">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="latestEst">Latest Estimate Finish Date</label>
+                <input type="date" [(ngModel)]="detailStore.latestEstFinish" class="form-control" id="latestEstE">
+              </div>
+            </div><!--/.row-->
+            <div class="form-group">
+              <label for="remark">Discuss Case</label>
+              <ckeditor [(ngModel)]="detailStore.description" [editor]="Editor"></ckeditor>
+            </div>
+            <div class="form-group">
+              <label for="remark">Remark</label>
+              <input type="text" [(ngModel)]="detailStore.remark" class="form-control" id="remarkE">
+            </div>
+            <div class="form-group">
+              <label for="caseStatus">Case Status</label>
+              <input type="text" [(ngModel)]="detailStore.status" class="form-control" id="caseStatusE">
+            </div>
+            <div class="form-group">
+              <label for="statusDesc">Status Update Desc.</label>
+              <input type="text" [(ngModel)]="detailStore.statusDesc" class="form-control" id="statusDescE">
+            </div>
           </div>
         </div><!--/.row-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Close</button>
         <button type="button" class="btn btn-primary" (click)="save(2)">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete</h4>
+        <button type="button" class="close" (click)="deleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this Item? </p> {{detailStore?.itemNo}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="deleteModal.hide()">Close</button>
+        <button type="button" class="btn btn-danger"(click)="deleteDetail()">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<div bsModal #historyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl"  role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">History Changes {{ itemno}}</h4>
+        <button type="button" class="close" (click)="historyModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>CRD</th>
+              <th>First Estimate Finish Date</th>
+              <th>Latest Estimate Finish Date</th>
+              <th>Remark</th>
+              <th>Case Status</th>
+              <th>Status update Description</th>
+              <th>Revision</th>
+              <th>Date Create</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="historyList?.length != 0">
+            <tr *ngFor="let data of historyList" >
+              <td>{{ data.crd | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 90px">{{ data.firstEstFinish | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 90px">{{ data.latestEstFinish | date: "yyyy/MM/dd" }}</td>
+              <td>{{ data.remark }}</td>
+              <td>{{ data.status }}</td>
+              <td style="min-width: 100px">{{ data.statusDesc }}</td>
+              <td>{{ data.revision }}</td>
+              <td>{{ data.updateAt | date: "yyyy/MM/dd HH:mm" }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="historyModal.hide()">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
