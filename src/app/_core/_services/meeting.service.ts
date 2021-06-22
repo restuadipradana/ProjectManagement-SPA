@@ -60,5 +60,9 @@ export class MeetingService {
     return this.http.get<any>(this.baseUrl + 'meeting/detail-histories', {params : {id:id}})
   }
 
+  exprotExcel(meeting: Meeting) {
+    return this.http.post(this.baseUrl + 'report/meeting',meeting,{responseType: 'blob' })
+  }
+
 
 }

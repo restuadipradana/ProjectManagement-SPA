@@ -225,4 +225,6 @@ export class ListDetailComponent implements OnInit {
   }
 
 
+
+
 }

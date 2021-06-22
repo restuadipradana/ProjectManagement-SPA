@@ -98,6 +98,9 @@ export class ListMeetingsComponent implements OnInit {
     else if (kind == 2) {
       this.deleteModal.show();
     }
+    else if (kind == 3) {
+      this.exportExcel(dataclicked);
+    }
   }
 
   addOpen() {
@@ -143,6 +146,23 @@ export class ListMeetingsComponent implements OnInit {
       msg: message,
       timeout: 3000
     });
+  }
+
+  exportExcel(data: Meeting) {
+    this._meetingSvc.exprotExcel(data)
+      .subscribe((result: Blob) => {
+        if (result.type !== 'application/xlsx') {
+          alert(result.type);
+        }
+        const blob = new Blob([result]);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const filename = 'MeetingMinutes_' + data.mM_Id + '.xlsx';
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+      });
   }
 
 }

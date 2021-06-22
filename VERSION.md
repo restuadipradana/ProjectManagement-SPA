@@ -17,6 +17,18 @@ straightforward as possible.
  
 ### Fixed
 
+## [1.1.0] - 2021-06-22
+  
+Add Meeting Minutes
+ 
+### Added
+
+- Can Upload and Download Meeting Minutes
+ 
+### Changed
+
+ 
+### Fixed
 
 
 ## [1.0.0] - 2021-05-20

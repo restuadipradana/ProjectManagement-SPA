@@ -74,15 +74,8 @@ export const navItems: INavData[] = [
       },
       {
         name: '3. Report',
-        url: '/upload',
-        icon: 'icon-puzzle',
-        children: [
-          {
-            name: '1.1 List Project',
-            url: '/upload',
-            class: "menu-margin",
-          }
-        ]
+        url: '',
+        icon: 'icon-puzzle'
       }
     ]
   },

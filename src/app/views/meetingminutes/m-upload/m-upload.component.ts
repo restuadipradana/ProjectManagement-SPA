@@ -39,7 +39,6 @@ export class MUploadComponent implements OnInit {
     const formData = new FormData();
     formData.append("meeting minutes excel", fileToUpload, fileToUpload.name);
     this._uploadSvc.uploadExcelMeeting(formData)
-    //this.http.post('https://localhost:5001/api/upload/upload', formData, {reportProgress: true, observe: 'events'})
       .subscribe((event) => {
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round(100 * event.loaded / event.total);
@@ -57,9 +56,9 @@ export class MUploadComponent implements OnInit {
       (error) => {
         console.log("ero", error.error);
         this.showNotif(error.error, "danger");
-        //setTimeout(() => {
-        //  this._document.defaultView.location.reload();
-        //}, 6000);
+        setTimeout(() => {
+          this._document.defaultView.location.reload();
+        }, 8000);
 
       });
 
