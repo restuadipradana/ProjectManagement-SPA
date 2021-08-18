@@ -14,6 +14,7 @@
         <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover sortable" style="width: 100%;">
           <thead>
             <tr>
+              <th style="width: 100px">System</th>
               <th style="width: 100px">Applicant</th>
               <th style="width: 100px">IT PIC</th>
               <th style="width: 150px">Request From No</th>
@@ -22,6 +23,7 @@
           </thead>
           <tbody *ngIf="listProjL1?.length != 0">
             <tr *ngFor="let data of listProjL1" (click)="clickRow(data, 1)">
+              <td>{{ data.system }}</td>
               <td>{{ data.applicant }}</td>
               <td>{{ data.pic }}</td>
               <td style="min-width: 150px">{{ data.requestFormNo }}</td>

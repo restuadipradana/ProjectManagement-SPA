@@ -86,12 +86,13 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
           });
       },
       columns: [
-        { data: 'applicant'  , 'orderable': false },
-        { data: 'pic' , 'orderable': false },
+        { data: 'system'  },
+        { data: 'applicant'  },
+        { data: 'pic'  },
         { data: 'requestFormNo' },
-        { data: 'requestFormDesc'  , 'orderable': false  }
+        { data: 'requestFormDesc' }
       ],
-      order: [2, 'asc'],
+      order: [3, 'asc'],
       autoWidth: false
     };
 
@@ -116,13 +117,14 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
           });
       },
       columns: [
+        { data: 'action', 'orderable': false },
         { data: 'applicant' , 'orderable': false },
         { data: 'pic' , 'orderable': false },
-        { data: 'requestFormNo' },
+        { data: 'requestFormNo' , 'orderable': false },
         { data: 'requestFormDesc' , 'orderable': false },
-        { data: 'stage' , 'orderable': false },
-        { data: 'userExpectedDate' , 'orderable': false },
-        { data: 'stageEstimateFinish' , 'orderable': false },
+        { data: 'stage' },
+        { data: 'userExpectedDate' },
+        { data: 'stageEstimateFinish'  },
         { data: 'stageActualFinish' , 'orderable': false },
         { data: 'testDateEstimate' , 'orderable': false },
         { data: 'applyDate' , 'orderable': false },
@@ -130,7 +132,7 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
         { data: 'week' , 'orderable': false },
         { data: 'createAt' , 'orderable': false }
       ],
-      order: [2, 'asc'],
+      order: [5, 'asc'],
       autoWidth: false,
     };
 

@@ -5,6 +5,5 @@ export interface ProjectL1List {
     pic: string;
     requestFormNo: string;
     requestFormDesc: string;
-    
+    system: string;
   }
-  
