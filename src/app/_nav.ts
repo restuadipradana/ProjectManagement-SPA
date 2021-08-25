@@ -53,7 +53,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Meeting Minute',
-    url: '/overview',
+    url: '/meeting-minute',
     children: [
       {
         name: '1. Maintain',
@@ -68,6 +68,34 @@ export const navItems: INavData[] = [
           {
             name: '2.1 List Meeting',
             url: '/meeting-minutes/list-meeting',
+            class: "menu-margin",
+          }
+        ]
+      },
+      {
+        name: '3. Report',
+        url: '',
+        icon: 'icon-puzzle'
+      }
+    ]
+  },
+  {
+    name: 'Project V2',
+    url: '/projects',
+    children: [
+      {
+        name: '1. Maintain',
+        url: '/projects/upload',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: '2. Query',
+        url: '',
+        icon: 'icon-puzzle',
+        children: [
+          {
+            name: '2.1 List Meeting',
+            url: '/projects/list',
             class: "menu-margin",
           }
         ]

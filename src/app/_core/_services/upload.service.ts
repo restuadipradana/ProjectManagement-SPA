@@ -21,4 +21,8 @@ export class UploadService {
   uploadExcelMeeting(data: any) {
     return this.http.post(this.baseUrl + 'meeting/upload', data, {reportProgress: true, observe: 'events'});
   }
+
+  uploadPM(data: any) {
+    return this.http.post(this.baseUrl + 'upload/upload-pm', data, {reportProgress: true, observe: 'events'});
+  }
 }
