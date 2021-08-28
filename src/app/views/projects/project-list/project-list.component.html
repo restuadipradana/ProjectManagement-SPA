@@ -1,1 +1,169 @@
-<p>project-list works!</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h4>1.1 List Project</h4>
+    </div>
+    <div class="card-body">
+      <!-- Nav tabs -->
+      <tabset #projTabs >
+
+        <tab (selectTab)="goFirstTab()"
+        [heading]="'Overview'"
+        [active]="true"
+        [disabled]="false">
+        <table id="dt1" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger" class="row-border hover sortable" style="width: 100%;">
+          <thead>
+            <tr>
+              <th style="width: 100px">Latest Upload Week</th>
+              <th style="width: 100px">System</th>
+              <th style="width: 150px">PJ Stage#</th>
+              <th style="width: 100px">Count request</th>
+              <th style="width: 110px">Stage</th>
+              <th style="width: 110px">Stage Latest Update Plan Finish</th>
+              <th style="width: 110px">Stage Actual Finish</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="listProjectL1?.length != 0">
+            <tr *ngFor="let data of listProjectL1" (click)="clickRow(data, 1)">
+              <td>{{ data.latestWeek }}</td>
+              <td>{{ data.system }}</td>
+              <td>{{ data.pjStage }}</td>
+              <td>{{ data.countReq }}</td>
+              <td>{{ data.stage }}</td>
+              <td>{{ data.latestUpdateStage | date: "yyyy/MM/dd"  }}</td>
+              <td>{{ data.stageActualFinish | date: "yyyy/MM/dd"  }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="listProjectL1?.length == 0">
+            <tr>
+              <td colspan="3" class="no-data-available">No data!</td>
+            </tr>
+          </tbody>
+      </table>
+          <br>
+        </tab>
+
+        <tab (selectTab)="goSecondTab()"
+        [heading]="secondTabTitle"
+        [active]="secondActive"
+        [disabled]="secondDisabled">
+        <div style="overflow:auto;" >
+        <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
+          <thead>
+            <tr>
+              <th>Add Stage#</th>
+              <th>Applicant</th>
+              <th>IT PIC</th>
+              <th>Request From No</th>
+              <th>Request Form Description</th>
+              <th>Stage</th>
+              <th>Expected Finish Date</th>
+              <th>Estimate Stage Finish</th>
+              <th>Actual Finish Date</th>
+              <th>IT Give Test Date</th>
+              <th>Apply Date</th>
+              <th>Memo</th>
+              <th>Week</th>
+              <th>Upload Time</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="listProjL2?.length != 0">
+            <tr *ngFor="let data of listProjL2" >
+              <td>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" *ngIf="data.fileName=='userinput'" (click)="openModal(data, 3)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+              <td>{{ data.applicant }}</td>
+              <td style="min-width: 100px" (click)="clickRow(data, 2)">{{ data.pic }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.requestFormNo }}</td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.requestFormDesc }}</pre></td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.stage }}</pre></td>
+              <td (click)="clickRow(data, 2)">{{ data.userExpectedDate }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.stageEstimateFinish }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.stageActualFinish }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.testDateEstimate }}</td>
+              <td (click)="clickRow(data, 2)">{{ data.applyDate }}</td>
+              <td (click)="clickRow(data, 2)"><pre>{{ data.memo }}</pre></td>
+              <td>{{ data.week }}</td>
+              <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="listProjL2?.length == 0">
+            <tr>
+              <td colspan="3" class="no-data-available">No data!</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+          <br>
+        </tab>
+
+        <tab [heading]="thirdTabTitle"
+        [active]="thirdActive"
+        [disabled]="thirdDisabled">
+        <div style="overflow:auto;" >
+          <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
+            <thead>
+              <tr>
+                <th>Add Memo2#</th>
+                <th>Applicant</th>
+                <th>IT PIC</th>
+                <th>Request From No</th>
+                <th>Request Form Description</th>
+                <th>Stage</th>
+                <th>Expected Finish Date</th>
+                <th>Estimate Stage Finish</th>
+                <th>Actual Finish Date</th>
+                <th>IT Give Test Date</th>
+                <th>Apply Date</th>
+                <th>Memo</th>
+                <th>Memo2</th>
+                <th>Week</th>
+                <th>Upload Time</th>
+                <th>Upload By</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="listProjL3?.length != 0">
+              <tr *ngFor="let data of listProjL3" (click)="clickRow(data, 3)">
+                <td>
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 2)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </td>
+                <td>{{ data.applicant }}</td>
+                <td style="min-width: 100px">{{ data.pic }}</td>
+                <td style="min-width: 150px">{{ data.requestFormNo }}</td>
+                <td><pre>{{ data.requestFormDesc }}</pre></td>
+                <td>{{ data.stage }}</td>
+                <td>{{ data.userExpectedDate }}</td>
+                <td>{{ data.stageEstimateFinish }}</td>
+                <td>{{ data.stageActualFinish }}</td>
+                <td>{{ data.testDateEstimate }}</td>
+                <td>{{ data.applyDate }}</td>
+                <td><pre>{{ data.memo }}</pre></td>
+                <td><pre>{{ data.memo2 }}</pre></td>
+                <td>{{ data.week }}</td>
+                <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
+                <td>{{ data.createBy }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="listProjL3?.length == 0">
+              <tr>
+                <td colspan="3" class="no-data-available">No data!</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </tab>
+
+      </tabset>
+    </div>
+  </div>
+</div>
+
+
+
