@@ -47,6 +47,8 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   reqformNosrc: string = "";
   reqformDescsrc: string = "";
   stagesrc: string ="";
+  systemsrc: string = "";
+  pjstagesrc: string = "";
 
 
   isDisableBtn: boolean;
@@ -88,7 +90,91 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
       order: [3, 'desc'],
       autoWidth: false
     };
+
+    this.dtOptions[1] = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        dataTablesParameters.searchCriteria = this.searchCriteria2;
+        console.log("param2: ", dataTablesParameters)
+        this._projectSvc.listProjL2(dataTablesParameters)
+          .subscribe(resp => {
+            this.listProjL2 = resp.data;
+            console.log("resp2" , resp);
+            callback({
+              recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+              data: []
+            });
+          });
+      },
+      columns: [
+        { data: 'week' },
+        { data: 'system'  },
+        { data: 'pjStage'  },
+        { data: 'reqNo' },
+        { data: 'reqSubject' },
+        { data: 'stage' },
+        { data: 'expectedFinish' },
+        { data: 'stagePlanFinish'  },
+        { data: 'stageActFinish' },
+        { data: 'giveTest' },
+        { data: 'applyDate' },
+        { data: 'applicant' },
+        { data: 'pic'  },
+        { data: 'memo' , 'orderable': false },
+        { data: 'createAt' }
+      ],
+      order: [7, 'desc'],
+      autoWidth: false,
+    };
+
+    this.dtOptions[2] = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      serverSide: true,
+      processing: true,
+      searching: false,
+      ajax: (dataTablesParameters: any, callback) => {
+        dataTablesParameters.searchCriteria = this.searchCriteria3;
+        console.log("param3: ", dataTablesParameters)
+        this._projectSvc.listProjL3(dataTablesParameters)
+          .subscribe(resp => {
+            this.listProjL3 = resp.data;
+            console.log("resp3" , resp);
+            callback({
+              recordsTotal: resp.recordsTotal,
+              recordsFiltered: resp.recordsFiltered,
+              data: []
+            });
+          });
+      },
+      columns: [
+        { data: 'week' },
+        { data: 'system'  },
+        { data: 'pjStage'  },
+        { data: 'reqNo' },
+        { data: 'reqSubject' },
+        { data: 'stage' },
+        { data: 'expectedFinish' },
+        { data: 'stagePlanFinish'  },
+        { data: 'stageActFinish' },
+        { data: 'giveTest' },
+        { data: 'applyDate' },
+        { data: 'applicant' },
+        { data: 'pic'  },
+        { data: 'memo' , 'orderable': false },
+        { data: 'createAt' }
+      ],
+      order: [7, 'desc'],
+      autoWidth: false,
+    };
   }
+
+  
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
@@ -99,11 +185,12 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
     this.searchCriteria.isPageLoad = true;
     this.searchCriteria.filter = "";
     this.searchCriteria2.isPageLoad = true;
-    this.searchCriteria2.filter = this.reqformNosrc;
-    this.searchCriteria2.filter2 = this.reqformDescsrc;
+    this.searchCriteria2.filter = this.systemsrc;
+    this.searchCriteria2.filter2 = this.pjstagesrc;
+    this.searchCriteria2.filter3 = this.stagesrc;
     this.searchCriteria3.filter = this.reqformNosrc;
-    this.searchCriteria3.filter2 = this.reqformDescsrc;
-    this.searchCriteria3.filter3 = this.stagesrc;
+    //this.searchCriteria3.filter2 = this.reqformDescsrc;
+    //this.searchCriteria3.filter3 = this.stagesrc;
 
     this.dtElements.forEach((dtElement: DataTableDirective) => {
       dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -124,16 +211,17 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
     console.log(data);
     switch(page) {
       case 1: {
-        this.reqformNosrc = data.reqNo;
-        this.reqformDescsrc = data.reqSubject;
+        this.systemsrc = data.system;
+        this.pjstagesrc = data.pjStage;
+        this.stagesrc = data.stage;
         this.rerender();
         this.goSecondTab();
         break;
       }
       case 2: {
         this.reqformNosrc = data.reqNo;
-        this.reqformDescsrc = data.reqSubject;
-        this.stagesrc = data.stage;
+        //this.reqformDescsrc = data.reqSubject;
+        //this.stagesrc = data.stage;
         this.rerender();
         this.goThirdTab();
         break;
@@ -150,7 +238,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
   goThirdTab(): void {
     //this.firstActive = false;
-    this.thirdTabTitle = this.stagesrc;
+    this.thirdTabTitle = this.reqformNosrc;
     this.thirdActive = true;
     this.projTabs.tabs[2].active = true;
     this.projTabs.tabs[2].disabled = false;
@@ -158,9 +246,9 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
   goSecondTab(): void {
     //this.firstActive = false;
-    this.secondTabTitle = this.reqformNosrc;
-    if(this.reqformNosrc == ''){
-      this.secondTabTitle = "(Memo)";
+    this.secondTabTitle = this.systemsrc;
+    if(this.systemsrc == ''){
+      this.secondTabTitle = "System";
     }
     this.thirdTabTitle = "";
     this.thirdActive = false;

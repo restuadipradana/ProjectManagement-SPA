@@ -12,10 +12,11 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { UploadComponent } from './upload/upload.component';
+import { ReportComponent } from './report/report.component';
 
 
 @NgModule({
-  declarations: [ProjectListComponent, UploadComponent],
+  declarations: [ProjectListComponent, UploadComponent, ReportComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

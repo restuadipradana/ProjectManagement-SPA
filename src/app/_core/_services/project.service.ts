@@ -18,4 +18,14 @@ export class ProjectService {
     const url = this.baseUrl + 'project/get-l1';
     return this.http.post<ResponseDT>(url, dataTablesParam, {});
   }
+
+  listProjL2(dataTablesParam: any) {
+    const url = this.baseUrl + 'project/get-l2';
+    return this.http.post<ResponseDT>(url, dataTablesParam, {});
+  }
+
+  listProjL3(dataTablesParam: any) {
+    const url = this.baseUrl + 'project/get-l3';
+    return this.http.post<ResponseDT>(url, dataTablesParam, {});
+  }
 }

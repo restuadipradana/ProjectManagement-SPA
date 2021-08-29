@@ -94,15 +94,20 @@ export const navItems: INavData[] = [
         icon: 'icon-puzzle',
         children: [
           {
-            name: '2.1 List Meeting',
+            name: '2.1 List Project',
             url: '/projects/list',
+            class: "menu-margin",
+          },
+          {
+            name: '2.2 Weekly',
+            url: '/overview/weekly',
             class: "menu-margin",
           }
         ]
       },
       {
         name: '3. Report',
-        url: '',
+        url: '/projects/report',
         icon: 'icon-puzzle'
       }
     ]

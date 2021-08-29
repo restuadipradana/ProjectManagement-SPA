@@ -51,44 +51,39 @@
         <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
           <thead>
             <tr>
-              <th>Add Stage#</th>
-              <th>Applicant</th>
-              <th>IT PIC</th>
-              <th>Request From No</th>
-              <th>Request Form Description</th>
+              <th>Latest Upload</th>
+              <th>System</th>
+              <th>PJ Stage#</th>
+              <th>Request No</th>
+              <th>Request Subject</th>
               <th>Stage</th>
               <th>Expected Finish Date</th>
-              <th>Estimate Stage Finish</th>
-              <th>Actual Finish Date</th>
+              <th>Stage Plan Finish Date</th>
+              <th>Stage Actual Finish Date</th>
               <th>IT Give Test Date</th>
               <th>Apply Date</th>
+              <th>Applicant</th>
+              <th>PIC</th>
               <th>Memo</th>
-              <th>Week</th>
               <th>Upload Time</th>
             </tr>
           </thead>
           <tbody *ngIf="listProjL2?.length != 0">
             <tr *ngFor="let data of listProjL2" >
-              <td>
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
-                  <i class="fa fa-plus"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" *ngIf="data.fileName=='userinput'" (click)="openModal(data, 3)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-              <td>{{ data.applicant }}</td>
-              <td style="min-width: 100px" (click)="clickRow(data, 2)">{{ data.pic }}</td>
-              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.requestFormNo }}</td>
-              <td (click)="clickRow(data, 2)"><pre>{{ data.requestFormDesc }}</pre></td>
+              <td style="min-width: 100px">{{ data.week }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.system }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.pjStage }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.reqNo }}</td>
+              <td style="min-width: 200px" (click)="clickRow(data, 2)"><pre>{{ data.reqSubject }}</pre></td>
               <td (click)="clickRow(data, 2)"><pre>{{ data.stage }}</pre></td>
-              <td (click)="clickRow(data, 2)">{{ data.userExpectedDate }}</td>
-              <td (click)="clickRow(data, 2)">{{ data.stageEstimateFinish }}</td>
-              <td (click)="clickRow(data, 2)">{{ data.stageActualFinish }}</td>
-              <td (click)="clickRow(data, 2)">{{ data.testDateEstimate }}</td>
-              <td (click)="clickRow(data, 2)">{{ data.applyDate }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.expectedFinish | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.stagePlanFinish | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.stageActFinish | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.giveTest | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.applyDate | date: "yyyy/MM/dd" }}</td>
+              <td style="min-width: 100px" (click)="clickRow(data, 2)">{{ data.applicant }}</td>
+              <td style="min-width: 100px" (click)="clickRow(data, 2)">{{ data.pic }}</td>
               <td (click)="clickRow(data, 2)"><pre>{{ data.memo }}</pre></td>
-              <td>{{ data.week }}</td>
               <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
             </tr>
           </tbody>
@@ -109,46 +104,40 @@
           <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
             <thead>
               <tr>
-                <th>Add Memo2#</th>
-                <th>Applicant</th>
-                <th>IT PIC</th>
-                <th>Request From No</th>
-                <th>Request Form Description</th>
+                <th>Latest Upload</th>
+                <th>System</th>
+                <th>PJ Stage#</th>
+                <th>Request No</th>
+                <th>Request Subject</th>
                 <th>Stage</th>
                 <th>Expected Finish Date</th>
-                <th>Estimate Stage Finish</th>
-                <th>Actual Finish Date</th>
+                <th>Stage Plan Finish Date</th>
+                <th>Stage Actual Finish Date</th>
                 <th>IT Give Test Date</th>
                 <th>Apply Date</th>
+                <th>Applicant</th>
+                <th>PIC</th>
                 <th>Memo</th>
-                <th>Memo2</th>
-                <th>Week</th>
                 <th>Upload Time</th>
-                <th>Upload By</th>
               </tr>
             </thead>
             <tbody *ngIf="listProjL3?.length != 0">
-              <tr *ngFor="let data of listProjL3" (click)="clickRow(data, 3)">
-                <td>
-                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 2)">
-                    <i class="fa fa-plus"></i>
-                  </button>
-                </td>
-                <td>{{ data.applicant }}</td>
+              <tr *ngFor="let data of listProjL3" >
+                <td style="min-width: 100px">{{ data.week }}</td>
+                <td style="min-width: 150px">{{ data.system }}</td>
+                <td style="min-width: 150px">{{ data.pjStage }}</td>
+                <td style="min-width: 150px">{{ data.reqNo }}</td>
+                <td style="min-width: 200px"><pre>{{ data.reqSubject }}</pre></td>
+                <td style="min-width: 150px"><pre>{{ data.stage }}</pre></td>
+                <td style="min-width: 150px" >{{ data.expectedFinish | date: "yyyy/MM/dd" }}</td>
+                <td style="min-width: 150px" >{{ data.stagePlanFinish | date: "yyyy/MM/dd" }}</td>
+                <td style="min-width: 150px" >{{ data.stageActFinish | date: "yyyy/MM/dd" }}</td>
+                <td style="min-width: 150px" >{{ data.giveTest | date: "yyyy/MM/dd" }}</td>
+                <td style="min-width: 150px" >{{ data.applyDate | date: "yyyy/MM/dd" }}</td>
+                <td style="min-width: 100px">{{ data.applicant }}</td>
                 <td style="min-width: 100px">{{ data.pic }}</td>
-                <td style="min-width: 150px">{{ data.requestFormNo }}</td>
-                <td><pre>{{ data.requestFormDesc }}</pre></td>
-                <td>{{ data.stage }}</td>
-                <td>{{ data.userExpectedDate }}</td>
-                <td>{{ data.stageEstimateFinish }}</td>
-                <td>{{ data.stageActualFinish }}</td>
-                <td>{{ data.testDateEstimate }}</td>
-                <td>{{ data.applyDate }}</td>
                 <td><pre>{{ data.memo }}</pre></td>
-                <td><pre>{{ data.memo2 }}</pre></td>
-                <td>{{ data.week }}</td>
                 <td>{{ data.createAt  | date: "yyyy/MM/dd HH:mm"  }}</td>
-                <td>{{ data.createBy }}</td>
               </tr>
             </tbody>
             <tbody *ngIf="listProjL3?.length == 0">
