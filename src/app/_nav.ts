@@ -1,53 +1,86 @@
 import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
+  // {
+  //   name: 'Project',
+  //   url: '/overview',
+  //   children: [
+  //     {
+  //       name: '1. Overview',
+  //       url: '/overview',
+  //       icon: 'icon-puzzle',
+  //       children: [
+  //         {
+  //           name: '1.1 List Project',
+  //           url: '/overview/list-project',
+  //           icon: 'icon-puzzle'
+  //         },
+  //         {
+  //           name: '1.2 Weekly',
+  //           url: '/overview/weekly',
+  //           icon: 'icon-puzzle'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       name: '2. Upload',
+  //       url: '/upload',
+  //       icon: 'icon-pie-chart'
+  //     },
+  //     {
+  //       name: '3. Download Report',
+  //       url: '/download-report',
+  //       icon: 'icon-pie-chart'
+  //     },
+  //     {
+  //       name: '4. Settings',
+  //       url: '/settings',
+  //       icon: 'icon-puzzle',
+  //       children: [
+  //         {
+  //           name: '4.1 Week Range SetUp',
+  //           url: '/settings/week-range',
+  //           icon: 'icon-puzzle'
+  //         },
+  //         {
+  //           name: '4.2 User',
+  //           url: '/settings/users',
+  //           icon: 'icon-puzzle'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
-    name: 'Project',
-    url: '/overview',
+    name: 'Project V2',
+    url: '/projects',
     children: [
       {
-        name: '1. Overview',
-        url: '/overview',
+        name: '1. Maintain',
+        url: '/projects/upload',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: '2. Query',
+        url: '',
         icon: 'icon-puzzle',
         children: [
           {
-            name: '1.1 List Project',
-            url: '/overview/list-project',
-            icon: 'icon-puzzle'
+            name: '2.1 List Project',
+            url: '/projects/list',
+            class: "menu-margin",
           },
           {
-            name: '1.2 Weekly',
-            url: '/overview/weekly',
-            icon: 'icon-puzzle'
+            name: '2.2 Weekly',
+            url: '/projects/weekly',
+            class: "menu-margin",
           }
         ]
       },
       {
-        name: '2. Upload',
-        url: '/upload',
-        icon: 'icon-pie-chart'
-      },
-      {
-        name: '3. Download Report',
-        url: '/download-report',
-        icon: 'icon-pie-chart'
-      },
-      {
-        name: '4. Settings',
-        url: '/settings',
-        icon: 'icon-puzzle',
-        children: [
-          {
-            name: '4.1 Week Range SetUp',
-            url: '/settings/week-range',
-            icon: 'icon-puzzle'
-          },
-          {
-            name: '4.2 User',
-            url: '/settings/users',
-            icon: 'icon-puzzle'
-          }
-        ]
+        name: '3. Report',
+        url: '/projects/report',
+        icon: 'icon-puzzle'
       }
     ]
   },
@@ -79,39 +112,7 @@ export const navItems: INavData[] = [
       }
     ]
   },
-  {
-    name: 'Project V2',
-    url: '/projects',
-    children: [
-      {
-        name: '1. Maintain',
-        url: '/projects/upload',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: '2. Query',
-        url: '',
-        icon: 'icon-puzzle',
-        children: [
-          {
-            name: '2.1 List Project',
-            url: '/projects/list',
-            class: "menu-margin",
-          },
-          {
-            name: '2.2 Weekly',
-            url: '/overview/weekly',
-            class: "menu-margin",
-          }
-        ]
-      },
-      {
-        name: '3. Report',
-        url: '/projects/report',
-        icon: 'icon-puzzle'
-      }
-    ]
-  },
+
 
 
 ];

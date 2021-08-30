@@ -40,4 +40,8 @@ export class SupportService {
   getStage(stage: string){
     return this.http.get<string>(this.baseUrl + 'settings/get-stage', { params: {stage:stage} } );
   }
+
+  getStatus(){
+    return this.http.get<any>(this.baseUrl + 'meeting/getstatus' );
+  }
 }

@@ -13,10 +13,11 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { UploadComponent } from './upload/upload.component';
 import { ReportComponent } from './report/report.component';
+import { WeeklyComponent } from './weekly/weekly.component';
 
 
 @NgModule({
-  declarations: [ProjectListComponent, UploadComponent, ReportComponent],
+  declarations: [ProjectListComponent, UploadComponent, ReportComponent, WeeklyComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

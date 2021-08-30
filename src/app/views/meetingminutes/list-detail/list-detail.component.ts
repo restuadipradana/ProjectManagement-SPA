@@ -7,7 +7,9 @@ import { DataTableDirective } from 'angular-datatables';
 import { SearchCriteriaDT } from '../../../_core/_models/dtModels/datatable';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { MeetingService } from '../../../_core/_services/meeting.service';
+import { SupportService } from '../../../_core/_services/support.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Select2OptionData } from 'ng-select2';
 //import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -21,6 +23,7 @@ export class ListDetailComponent implements OnInit {
 
   public Editor = ClassicEditor;
   public editorData = '<p>Hello, world!</p>';
+  isCollapsed: boolean = false;
 
   @ViewChild('addModal') public addModal: ModalDirective;
   @ViewChild('editModal') public editModal: ModalDirective;
@@ -36,6 +39,10 @@ export class ListDetailComponent implements OnInit {
   historyList: MeetingHistory[];
   historyStore: any = {};
   itemno: string = '';
+  caseStat: Array<Select2OptionData>;
+  case: string;
+  caseSelect: string;
+  kemon: number = 1
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -43,7 +50,7 @@ export class ListDetailComponent implements OnInit {
   dtElement: DataTableDirective;
   searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
 
-  constructor(private _meetingSvc: MeetingService, private route: ActivatedRoute) { }
+  constructor(private _meetingSvc: MeetingService, private _supportSvc: SupportService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this._meetingSvc.currFuncMGUid.subscribe(
@@ -51,6 +58,7 @@ export class ListDetailComponent implements OnInit {
     );
     this.idmm_src = this.route.snapshot.params['guid'];
     this.getMeeting(this.idmm_src);
+    this.getListCaseStat()
     this.searchCriteria.filter = this.idmm_src; //hehe cari by guid
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -90,6 +98,7 @@ export class ListDetailComponent implements OnInit {
       order: [1, 'asc'],
       autoWidth: false
     };
+
   }
 
   ngAfterViewInit(): void {
@@ -100,6 +109,8 @@ export class ListDetailComponent implements OnInit {
   rerender(): void {
     this.searchCriteria.isPageLoad = false;
     this.searchCriteria.filter = this.idmm_src;
+    if (this.case === 'All') { this.searchCriteria.filter2 = ''}
+    else { this.searchCriteria.filter2 = this.case}
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
       this.dtTrigger.next();
@@ -222,6 +233,38 @@ export class ListDetailComponent implements OnInit {
         this.showNotif(error.error, "warning");
       }
     );
+  }
+
+  statusChg() {
+    this.caseSelect = this.case
+    console.log("selected ", this.caseSelect);
+    if (this.kemon > 1) {
+      this.rerender()
+    }
+    this.kemon++
+  }
+
+  getListCaseStat() {
+    this._supportSvc.getStatus().subscribe((res: any) => {
+      //console.log('result stat', res)
+      this.caseStat = res.map(item => {
+        //console.log('sa',  item)
+        if (item === '') { return {id: 'All', text: 'All'}}
+        else { return {id: item, text: item} }
+
+      })
+      //console.log(this.caseStat)
+      //console.log('case', this.case)
+      this.case = 'All'
+    })
+  }
+
+  collapsed(event: any): void {
+    // console.log(event);
+  }
+
+  expanded(event: any): void {
+    // console.log(event);
   }
 
 

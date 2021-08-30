@@ -4,9 +4,35 @@
         <h4>3. Download Report</h4>
       </div>
       <div class="card-body">
-        <button type="button" class="btn btn-success btn-sm" (click)="exportExcel()">
-          Download Report
-        </button>
+        <div class="row">
+            <div class="form-group col-sm-4">
+              <label for="start">From: </label>
+              <input type="date" [(ngModel)]="dateRange.startDate" class="form-control" id="start">
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="end">To: </label>
+              <input type="date" [(ngModel)]="dateRange.endDate" class="form-control" id="end">
+            </div>
+
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <button type="button" class="btn btn-success btn-sm" (click)="search()">
+              Download Report
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-8">
+            <div >
+              <div *ngFor="let alert of alertsDismiss">
+                <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true"><p>{{ alert.msg }}</p></alert>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

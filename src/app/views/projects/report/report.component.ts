@@ -14,10 +14,37 @@ import { DateRange } from '../../../_core/_models/date-range';
 export class ReportComponent implements OnInit {
 
   baseUrl = environment.apiUrl;
+  dateRange: DateRange ={ startDate: null, endDate: null};
+  alertsDismiss: any = [];
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+
+  }
+
+  search() {
+    console.log(this.dateRange);
+    if (this.dateRange.startDate === null || this.dateRange.endDate === null) {
+      this.showNotif("Please fill date range!", "warning")
+      return
+    }
+    else if (this.dateRange.startDate > this.dateRange.endDate) {
+      this.showNotif("Invalid date!", "warning")
+      return
+    }
+    this.exportExcel(this.dateRange)
+    Object.assign(this.dateRange, {startDate: null, endDate: null})
+    console.log(this.dateRange);
+
+  }
+
+  showNotif(message: any, tipe: string) {
+    this.alertsDismiss.push({
+      type: tipe,
+      msg: message,
+      timeout: 5200
+    });
   }
 
   exportExcel(range: DateRange) {
@@ -32,7 +59,7 @@ export class ReportComponent implements OnInit {
         const link = document.createElement('a');
         const currentTime = new Date();
         const filename = 'PM-Report_' + currentTime.getFullYear().toString() + '-' +
-          (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + '-' + 
+          (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + '-' +
           currentTime.toLocaleTimeString().replace(/[ ]|[,]|[:]/g, '').trim() + '.xlsx';
         link.href = url;
         link.setAttribute('download', filename);

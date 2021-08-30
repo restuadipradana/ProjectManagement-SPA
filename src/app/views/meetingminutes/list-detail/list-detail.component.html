@@ -1,9 +1,12 @@
 <div class="animated fadeIn">
   <div class="card card-accent-primary">
-    <div class="card-header">
+    <div class="card-header" (click)="isCollapsed = !isCollapsed" style="cursor: pointer;">
       <h4>{{meeting?.mM_Id}}</h4>
     </div>
-    <div class="card-body">
+    <div class="card-body" (collapsed)="collapsed($event)"
+        (expanded)="expanded($event)"
+        [collapse]="isCollapsed"
+        [isAnimated]="true">
       <div class="form-group row">
         <div class="col-md-2">
           <p><b>MM ID [會議記錄ID]</b> </p>
@@ -66,10 +69,15 @@
   <div class="card">
     <div class="card-header">
       <div class="form-row">
-        <div class="form-group col-md-10">
+        <div class="form-group col-md-9">
           <h4>{{meeting?.m_Name}}</h4>
         </div>
         <div class="form-group col-md-2">
+          <ng-select2 [data]="caseStat" width="100%" [(ngModel)]="case" (ngModelChange) ="statusChg()"
+            [value] ="case" name="case" required>
+          </ng-select2>
+        </div>
+        <div class="form-group col-md-1">
           <button type="button" class="btn btn-primary pull-right" (click)="addOpen()">
             Add
           </button>

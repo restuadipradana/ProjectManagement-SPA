@@ -1,3 +1,4 @@
+import { WeeklyComponent } from './../projects/weekly/weekly.component';
 import { ReportComponent } from './report/report.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -30,6 +31,13 @@ const routes: Routes = [
         component: ReportComponent,
         data: {
           title: 'Download Report'
+        }
+      },
+      {
+        path: 'weekly',
+        component: WeeklyComponent,
+        data: {
+          title: 'Weekly'
         }
       }
     ]

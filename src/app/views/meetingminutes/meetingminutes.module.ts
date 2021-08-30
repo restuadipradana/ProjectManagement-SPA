@@ -10,6 +10,8 @@ import { ListDetailComponent } from './list-detail/list-detail.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from "angular-datatables";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [ListMeetingsComponent, MUploadComponent, ListDetailComponent],
@@ -21,6 +23,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     FormsModule,
     ModalModule.forRoot(),
     DataTablesModule,
+    CollapseModule.forRoot(),
+    NgSelect2Module,
     CKEditorModule
   ]
 })
