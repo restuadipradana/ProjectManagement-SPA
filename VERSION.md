@@ -5,12 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.1] - 2021-09-25
+  
+ 
+### Added
+
+- Add edit button
+ 
+### Changed
+
+- LV1 and LV2 not count and not show data that StageActualFinishDate has a date
+- Change Col header color for key
+ 
+### Fixed
+
+- Fix sorting data
+
+
+## [2.0.1] - 2021-09-01
+  
+ 
+### Added
+
+ 
+### Changed
+
+ 
+### Fixed
+
+- Fix sorting data
+- Fix Count Request logic
+- Fix upload  issue 
+
+
 ## [2.0.0] - 2021-08-30
   
  
 ### Added
 
-- Project Management V2
+- Project Management V2 (new format)
  
 ### Changed
 

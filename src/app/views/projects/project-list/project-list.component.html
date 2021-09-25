@@ -15,10 +15,10 @@
           <thead>
             <tr>
               <th style="width: 100px">Latest Upload Week</th>
-              <th style="width: 100px">System</th>
-              <th style="width: 150px">PJ Stage#</th>
+              <th style="width: 100px; background-color:lightskyblue;">System</th>
+              <th style="width: 150px; background-color:lightskyblue;">PJ Stage#</th>
               <th style="width: 100px">Count request</th>
-              <th style="width: 110px">Stage</th>
+              <th style="width: 110px; background-color:lightskyblue;">Stage</th>
               <th style="width: 110px">Stage Latest Update Plan Finish</th>
               <th style="width: 110px">Stage Actual Finish</th>
             </tr>
@@ -51,12 +51,13 @@
         <table id="dt2" datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
           <thead>
             <tr>
+              <th>Action#</th>
               <th>Latest Upload</th>
               <th>System</th>
               <th>PJ Stage#</th>
-              <th>Request No</th>
+              <th style="background-color:lightskyblue;">Request No</th>
               <th>Request Subject</th>
-              <th>Stage</th>
+              <th style="background-color:lightskyblue;">Stage</th>
               <th>Expected Finish Date</th>
               <th>Stage Plan Finish Date</th>
               <th>Stage Actual Finish Date</th>
@@ -70,6 +71,11 @@
           </thead>
           <tbody *ngIf="listProjL2?.length != 0">
             <tr *ngFor="let data of listProjL2" >
+              <td>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </td>
               <td style="min-width: 100px">{{ data.week }}</td>
               <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.system }}</td>
               <td style="min-width: 150px" (click)="clickRow(data, 2)">{{ data.pjStage }}</td>
@@ -104,6 +110,7 @@
           <table id="dt3" datatable [dtOptions]="dtOptions[2]" [dtTrigger]="dtTrigger" class="row-border hover sortable" >
             <thead>
               <tr>
+                <th>Action#</th>
                 <th>Latest Upload</th>
                 <th>System</th>
                 <th>PJ Stage#</th>
@@ -123,6 +130,11 @@
             </thead>
             <tbody *ngIf="listProjL3?.length != 0">
               <tr *ngFor="let data of listProjL3" >
+                <td>
+                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" (click)="openModal(data, 1)">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                </td>
                 <td style="min-width: 100px">{{ data.week }}</td>
                 <td style="min-width: 150px">{{ data.system }}</td>
                 <td style="min-width: 150px">{{ data.pjStage }}</td>
@@ -153,6 +165,76 @@
     </div>
   </div>
 </div>
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{listProjS?.reqNo}}</h4>
+        <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Request Form No</label>
+              <div class="col-md-9">
+                <p class="form-control-static">{{listProjS?.reqNo}}</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Expected Finish</label>
+              <div class="col-md-9">
+                <input type="date" id="expect-input" name="text-input" class="form-control" [(ngModel)]="listProjS.expectedFinish" >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Stage Plan Finish</label>
+              <div class="col-md-9">
+                <input type="date" id="eststage-input" name="text-input" class="form-control" [(ngModel)]="listProjS.stagePlanFinish" >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Stage Actual Finish</label>
+              <div class="col-md-9">
+                <input type="date" id="finishdate-input" name="text-input" class="form-control" [(ngModel)]="listProjS.stageActFinish" >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">IT Give Test Date</label>
+              <div class="col-md-9">
+                <input type="date" id="testdate-input" name="text-input" class="form-control" [(ngModel)]="listProjS.giveTest">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Apply Date</label>
+              <div class="col-md-9">
+                <input type="date" id="apply-input" name="text-input" class="form-control" [(ngModel)]="listProjS.applyDate" >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="textarea-input">Memo</label>
+              <div class="col-md-9">
+                <textarea id="memo-input" name="textarea-input" rows="9" class="form-control" [(ngModel)]="listProjS.memo"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div *ngFor="let alert of alertsDismiss">
+              <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true">{{ alert.msg }}</alert>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(1)" >Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

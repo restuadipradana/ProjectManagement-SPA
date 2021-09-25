@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResponseDT } from '../_models/dtModels/datatable';
 import { environment } from './../../../environments/environment';
+import { PmList } from '../_models/pm-list';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class ProjectService {
   listProjL3(dataTablesParam: any) {
     const url = this.baseUrl + 'project/get-l3';
     return this.http.post<ResponseDT>(url, dataTablesParam, {});
+  }
+
+  editProj(proj: PmList) {
+    return this.http.post(this.baseUrl + 'project/edit-proj', proj);
   }
 }

@@ -7,7 +7,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
+import { ToastrModule } from 'ngx-toastr';
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -45,6 +45,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   imports: [
     HttpClientModule,
@@ -62,6 +63,13 @@ import { ChartsModule } from 'ng2-charts';
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass :'toast-top-center',
+      preventDuplicates: true,
+      progressBar: true,
+      tapToDismiss: true,
+      resetTimeoutOnDuplicate: true
+    }), // ToastrModule added
   ],
   declarations: [
     AppComponent,

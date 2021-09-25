@@ -7,6 +7,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PmL1 } from '../../../_core/_models/pm-l1';
 import { PmList } from '../../../_core/_models/pm-list';
 import { ProjectService } from '../../../_core/_services/project.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-project-list',
@@ -14,6 +15,8 @@ import { ProjectService } from '../../../_core/_services/project.service';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('editModal') public editModal: ModalDirective;
 
   dtOptions: DataTables.Settings[] = [];
   dtTrigger: Subject<any> = new Subject();
@@ -42,6 +45,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   thirdDisabled: boolean = true;
 
   listProjectL1: PmL1[];
+  listProjS: any = {};
   listProjL2: PmList[];
   listProjL3: PmList[];
   reqformNosrc: string = "";
@@ -54,7 +58,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   isDisableBtn: boolean;
   alertsDismiss: any = [];
 
-  constructor(private _projectSvc: ProjectService) { }
+  constructor(private toastr: ToastrService, private _projectSvc: ProjectService) { }
 
   ngOnInit(): void {
     this.dtOptions[0] = {
@@ -87,7 +91,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
         { data: 'stageActualFinish' }
 
       ],
-      order: [3, 'desc'],
+      order: [],
       autoWidth: false
     };
 
@@ -112,6 +116,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
           });
       },
       columns: [
+        { data: 'action', 'orderable': false },
         { data: 'week' },
         { data: 'system'  },
         { data: 'pjStage'  },
@@ -128,7 +133,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
         { data: 'memo' , 'orderable': false },
         { data: 'createAt' }
       ],
-      order: [7, 'desc'],
+      order: [],
       autoWidth: false,
     };
 
@@ -153,6 +158,7 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
           });
       },
       columns: [
+        { data: 'action', 'orderable': false },
         { data: 'week' },
         { data: 'system'  },
         { data: 'pjStage'  },
@@ -169,12 +175,12 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
         { data: 'memo' , 'orderable': false },
         { data: 'createAt' }
       ],
-      order: [7, 'desc'],
+      order: [],
       autoWidth: false,
     };
   }
 
-  
+
 
   ngAfterViewInit(): void {
     this.dtTrigger.next();
@@ -231,6 +237,69 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
+//modal (kind 1 add stage, 2 add memo2)
+openModal(data: PmList, kind: number) {
+  if (kind == 1) {
+    const asm = data;
+    //this.modData = data;
+    //this.listProjS = {}
+    this.listProjS = Object.assign({}, data);
+    this.listProjS.expectedFinish = this.listProjS.expectedFinish === null ? "" : this.listProjS.expectedFinish.split('T')[0]
+    this.listProjS.stagePlanFinish = this.listProjS.stagePlanFinish === null ? "" : this.listProjS.stagePlanFinish.split('T')[0]
+    this.listProjS.stageActFinish = this.listProjS.stageActFinish === null ? "" : this.listProjS.stageActFinish.split('T')[0]
+    this.listProjS.giveTest = this.listProjS.giveTest === null ? "" : this.listProjS.giveTest.split('T')[0]
+    this.listProjS.applyDate = this.listProjS.applyDate === null ? "" : this.listProjS.applyDate.split('T')[0]
+    this.listProjS.memo
+    console.log('om', this.listProjS)
+
+    this.editModal.show();
+  }
+  // if (kind == 2) {
+  //   this.modData = data;
+  //   this.memo2Modal.show();
+  // }
+  // if (kind == 3) {
+  //   this.modData = data;
+  //   this.deleteModal.show();
+  // }
+}
+
+save(kind: number) {
+  //1 add stage, 2 add memo2
+  console.log("before save", this.listProjS);
+  if (kind == 1) {
+
+    this._projectSvc.editProj(this.listProjS).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.editModal.hide();
+        this.toastr.success('Success to edit', 'Success')
+        this.rerender();
+      },
+      (error) => {
+        console.log(error);
+        this.showNotif(error.error);
+        this.toastr.warning(error.error, 'Fail to edit!')
+      }
+    );
+  }
+  if (kind == 2) {
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
   selectedTab(tabId: number) {
     this.projTabs.tabs[tabId].active = true;
