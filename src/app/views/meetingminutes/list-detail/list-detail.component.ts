@@ -48,7 +48,7 @@ export class ListDetailComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
+  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '', filter4: ''  };
 
   constructor(private _meetingSvc: MeetingService, private _supportSvc: SupportService, private route: ActivatedRoute) { }
 

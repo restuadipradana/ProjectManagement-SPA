@@ -8,6 +8,7 @@ import { PmL1 } from '../../../_core/_models/pm-l1';
 import { PmList } from '../../../_core/_models/pm-list';
 import { ProjectService } from '../../../_core/_services/project.service';
 import { ToastrService } from 'ngx-toastr';
+import { Select2OptionData } from 'ng-select2';
 
 @Component({
   selector: 'app-project-list',
@@ -17,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProjectListComponent implements OnInit, AfterViewInit {
 
   @ViewChild('editModal') public editModal: ModalDirective;
+  @ViewChild('confirmModal') public confirmModal: ModalDirective;
 
   dtOptions: DataTables.Settings[] = [];
   dtTrigger: Subject<any> = new Subject();
@@ -26,9 +28,9 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   dtElements: QueryList<DataTableDirective>; //gatau biar bisa rerender multiple table
 
   //dtElement: DataTableDirective;
-  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
-  searchCriteria2: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx' };
-  searchCriteria3: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx' };
+  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '', filter4: '0' };
+  searchCriteria2: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx', filter4: '0'  };
+  searchCriteria3: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx', filter4: '0'  };
 
   tabLevelIdx: number;
   prevPosIdx: number;
@@ -57,6 +59,12 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
   isDisableBtn: boolean;
   alertsDismiss: any = [];
+  projstat: Array<Select2OptionData> =  [
+    {id: '0', text: 'Open'},
+    {id: '1', text: 'Close'},
+    ];
+  status: string
+  kemon: number = 1
 
   constructor(private toastr: ToastrService, private _projectSvc: ProjectService) { }
 
@@ -195,6 +203,9 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
     this.searchCriteria2.filter2 = this.pjstagesrc;
     this.searchCriteria2.filter3 = this.stagesrc;
     this.searchCriteria3.filter = this.reqformNosrc;
+    this.searchCriteria.filter4 = this.status;
+    this.searchCriteria2.filter4 = this.status;
+    this.searchCriteria3.filter4 = this.status;
     //this.searchCriteria3.filter2 = this.reqformDescsrc;
     //this.searchCriteria3.filter3 = this.stagesrc;
 
@@ -203,6 +214,14 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
         dtInstance.ajax.reload(null, false);
       });
     });
+  }
+
+  statusChg() {
+    if (this.kemon > 1) {
+      console.log('stachg', this.status)
+      this.rerender()
+    }
+    this.kemon++
   }
 
   showNotif(message: any) {
@@ -238,56 +257,70 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
     }
   }
 
-//modal (kind 1 add stage, 2 add memo2)
-openModal(data: PmList, kind: number) {
-  if (kind == 1) {
-    const asm = data;
-    //this.modData = data;
-    //this.listProjS = {}
-    this.listProjS = Object.assign({}, data);
-    this.listProjS.expectedFinish = this.listProjS.expectedFinish === null ? "" : this.listProjS.expectedFinish.split('T')[0]
-    this.listProjS.stagePlanFinish = this.listProjS.stagePlanFinish === null ? "" : this.listProjS.stagePlanFinish.split('T')[0]
-    this.listProjS.stageActFinish = this.listProjS.stageActFinish === null ? "" : this.listProjS.stageActFinish.split('T')[0]
-    this.listProjS.giveTest = this.listProjS.giveTest === null ? "" : this.listProjS.giveTest.split('T')[0]
-    this.listProjS.applyDate = this.listProjS.applyDate === null ? "" : this.listProjS.applyDate.split('T')[0]
-    this.listProjS.memo
-    console.log('om', this.listProjS)
+  //modal (kind 1 add stage, 2 add memo2)
+  openModal(data: PmList, kind: number) {
+    if (kind == 1) {
+      const asm = data;
+      //this.modData = data;
+      //this.listProjS = {}
+      this.listProjS = Object.assign({}, data);
+      this.listProjS.expectedFinish = this.listProjS.expectedFinish === null ? "" : this.listProjS.expectedFinish.split('T')[0]
+      this.listProjS.stagePlanFinish = this.listProjS.stagePlanFinish === null ? "" : this.listProjS.stagePlanFinish.split('T')[0]
+      this.listProjS.stageActFinish = this.listProjS.stageActFinish === null ? "" : this.listProjS.stageActFinish.split('T')[0]
+      this.listProjS.giveTest = this.listProjS.giveTest === null ? "" : this.listProjS.giveTest.split('T')[0]
+      this.listProjS.applyDate = this.listProjS.applyDate === null ? "" : this.listProjS.applyDate.split('T')[0]
+      this.listProjS.memo
+      console.log('om', this.listProjS)
 
-    this.editModal.show();
+      this.editModal.show();
+    }
+    // if (kind == 2) {
+    //   this.modData = data;
+    //   this.memo2Modal.show();
+    // }
+    // if (kind == 3) {
+    //   this.modData = data;
+    //   this.deleteModal.show();
+    // }
   }
-  // if (kind == 2) {
-  //   this.modData = data;
-  //   this.memo2Modal.show();
-  // }
-  // if (kind == 3) {
-  //   this.modData = data;
-  //   this.deleteModal.show();
-  // }
-}
 
-save(kind: number) {
-  //1 add stage, 2 add memo2
-  console.log("before save", this.listProjS);
-  if (kind == 1) {
+  save(kind: number) {
+    //1 change, 2 close req no
+    console.log("before save", this.listProjS);
+    if (kind == 1) {
 
-    this._projectSvc.editProj(this.listProjS).subscribe(
-      (res: any) => {
-        console.log(res);
-        this.editModal.hide();
-        this.toastr.success('Success to edit', 'Success')
-        this.rerender();
-      },
-      (error) => {
-        console.log(error);
-        this.showNotif(error.error);
-        this.toastr.warning(error.error, 'Fail to edit!')
-      }
-    );
+      this._projectSvc.editProj(this.listProjS).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.editModal.hide();
+          this.toastr.success('Success to edit', 'Success')
+          this.rerender();
+        },
+        (error) => {
+          console.log(error);
+          this.showNotif(error.error);
+          this.toastr.warning(error.error, 'Fail to edit!')
+        }
+      );
+    }
+    if (kind == 2) {
+      this._projectSvc.closeReqNo(this.listProjS).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.editModal.hide();
+          this.confirmModal.hide()
+          this.toastr.success('Success to close', 'Success')
+          this.rerender();
+        },
+        (error) => {
+          console.log(error);
+          this.confirmModal.hide()
+          this.showNotif(error.error);
+          this.toastr.warning(error.error, 'Fail to edit!')
+        }
+      );
+    }
   }
-  if (kind == 2) {
-
-  }
-}
 
 
 

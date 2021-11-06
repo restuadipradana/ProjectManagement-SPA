@@ -17,4 +17,5 @@ export class PmList {
   weekId: string;
   createBy: string;
   createAt: Date;
+  isClosed: boolean
 }

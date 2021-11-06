@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.3] - 2021-11-06
+  
+ 
+### Added
+
+- Close / Open Status
+ 
+### Changed
+
+ 
+### Fixed
+
+
+
+## [2.1.2] - 2021-10-05
+  
+ 
+### Added
+
+- Add IT Give test date parameter to search report
+ 
+### Changed
+
+- Change report logic (latest week will be downloaded by req no and stage)
+ 
+### Fixed
+
+- Fix upload bug
+
+
 ## [2.1.1] - 2021-09-25
   
  

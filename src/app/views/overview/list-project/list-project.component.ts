@@ -30,9 +30,9 @@ export class ListProjectComponent implements OnInit, AfterViewInit {
   @ViewChildren(DataTableDirective)
   dtElements: QueryList<DataTableDirective>; //gatau biar bisa rerender multiple table
   //dtElement: DataTableDirective;
-  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
-  searchCriteria2: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx' };
-  searchCriteria3: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx' };
+  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '', filter4: ''  };
+  searchCriteria2: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx', filter4: ''  };
+  searchCriteria3: SearchCriteriaDT = { isPageLoad: true, filter: 'xx', filter2: 'xx', filter3: 'xx', filter4: ''  };
 
   tabLevelIdx: number;
   prevPosIdx: number;

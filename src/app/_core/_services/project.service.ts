@@ -33,4 +33,8 @@ export class ProjectService {
   editProj(proj: PmList) {
     return this.http.post(this.baseUrl + 'project/edit-proj', proj);
   }
+
+  closeReqNo(proj: PmList) {
+    return this.http.post(this.baseUrl + 'project/close-req', proj);
+  }
 }

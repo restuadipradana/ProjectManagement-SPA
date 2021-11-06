@@ -15,7 +15,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
   styleUrls: ['./weekly.component.scss']
 })
 export class WeeklyComponent implements OnInit {
-  
+
   searchtxt: string;
   WeekLists: WeekList[];
   selectedWeekId: string;
@@ -26,7 +26,7 @@ export class WeeklyComponent implements OnInit {
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '' };
+  searchCriteria: SearchCriteriaDT = { isPageLoad: true, filter: '', filter2: '', filter3: '', filter4: ''  };
 
   constructor(private _overviewSvc: OverviewService, private alertify: AlertifyService) { }
 

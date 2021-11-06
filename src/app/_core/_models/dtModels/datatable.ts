@@ -3,6 +3,7 @@ export interface SearchCriteriaDT {
   filter: string;
   filter2: string;
   filter3: string;
+  filter4: string;
 }
 
 export class ResponseDT {
